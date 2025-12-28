@@ -1,3 +1,3 @@
-// Template index.js file
+// Battleship JS index
 
 import "./style.css";

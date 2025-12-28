@@ -1,2 +1,3 @@
-# template-js
-Template repo for HTML/CSS/JS projects
+# Battleship
+
+Implementation of the classic: Battleship. By [joeypizzas](https://github.com/joeypizzas).
