@@ -41,7 +41,56 @@
 
 ## How do you plan to design the application state?
 
+- Ship class:
+  - Constructor:
+    - length (passed as parameter).
+    - Number of times hit (initially 0).
+    - Whether they've been sunk (initially false).
+    - Name. Set to setShipName method call with length as parameter.
+    - PlacementSquares, initially set to empty array.
+    - fullyPlaced: set initially to false.
+  - Methods:
+    - setShipName(length):
+      - returns ship name based on length.
+    - hit():
+      - increases hit key.
+    - isSunk():
+      - Checks whether ship is sunk based on number of hits.
+      - If yes, updates sunk key and returns true.
+      - Otherwise, return false.
+    - addPlacementSquare(x-coordinate, y-coordinate):
+      - Creates square array and pushes x and y coordinate to it.
+      - Pushes that array to PlacementSquares array to track whether ship has been entirely or partially placed and where.
+    - isFullyPlaced():
+      - Checks whether ship is fully placed based on length of ship and length of PlacementSquares array.
+      - If yes, updates fullyPlaced key to true and returns true.
+      - Else, return false.
+- Gameboard class:
+  - Constructor:
+    - grid. Set to createGrid method call.
+  - Methods:
+    - createGrid():
+      - Initialize 10x10 2d grid array.
+      - Set each square to null.
+      - Return grid array.
+    - placeShip(ship, x-coordinate, y-coordinate):
+      - Tries to place part of a ship in an individual square.
+      - ship param is an object previously created via the ship constructor.
+      - x and y coordinate params are square where part of ship wants to be placed.
+      - **Not necessary to guard against invalid coordinates because coordinates will come from user click on grid in UI.**
+      - Invokes isValidMove(ship, x-coordinate, y-coordinate).
+        - If true, sets grid square to that ship object and return true.
+        - Else, return false.
+    - isValidMove(ship, x-coordinate, y-coordinate):
+      - Determines whether part of a ship can be placed in a specific square on the grid.
+      -
+
 ## How do you plan to organize your project files?
+
+- ship.js
+- ship.test.js
+- gameboard.js
+- gameboard.test.js
 
 ## What inputs will your program have? Will the user enter data or will you get input from somewhere else?
 
