@@ -38,8 +38,6 @@
       - Once a ship has been selected, it must be placed. No de-selecting it and selecting another for simplicity.
   - Footer:
     - Author attribution.
-- Color scheme:
-  -
 
 ## How do you plan to design the application state?
 
