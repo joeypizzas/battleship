@@ -47,7 +47,7 @@
     - Number of times hit (initially 0).
     - Whether they've been sunk (initially false).
     - Name. Set to setShipName method call with length as parameter.
-    - PlacementSquares, initially set to empty array.
+    - shipPlacement, initially set to empty array.
     - fullyPlaced: set initially to false.
   - Methods:
     - setShipName(length):
@@ -58,13 +58,38 @@
       - Checks whether ship is sunk based on number of hits.
       - If yes, updates sunk key and returns true.
       - Otherwise, return false.
-    - addPlacementSquare(x-coordinate, y-coordinate):
-      - Creates square array and pushes x and y coordinate to it.
-      - Pushes that array to PlacementSquares array to track whether ship has been entirely or partially placed and where.
-    - isFullyPlaced():
-      - Checks whether ship is fully placed based on length of ship and length of PlacementSquares array.
-      - If yes, updates fullyPlaced key to true and returns true.
-      - Else, return false.
+    - canShipFitFromSquare(x-coordinate, y-coordinate):
+      - Verifies full ship can fit in at least one direction from starting square.
+      - For loop checking checking each of the 4 directions, either incrementing or decrementing x OR incrementing or decrementing y. Loop size is based on the ship length - 1 (factoring in the starting square).
+        - If (!gameboard.isSquareOpen OR whatever coordinate direction is changing is one of <= 0 or => 9 (depends on if incrementing or decrementing) AND x < ship length - 1), break the loop.
+        - If get to to the last item in the loop without breaking, return true inside of the loop.
+        - Repeat loops with the other 3 directions.
+      - Return outside of the last for loop.
+      - **Add logic here to cover second square to make sure the ship can fit in the particular direction**
+    - areShipCoordinatesStraight(x-coordinate, y-coordindate):
+      - Verifies whether ship coordinates follow a straight line, factoring in the new proposed square.
+      - Takes x and y coordinate params for proposed square placement.
+      - Return true if ship.shipPlacement.length === 0 because this is the ship's first square.
+      - If x coordinate param === x coordindate of first stored coordindate of ship.shipPlacement:
+        - Create a new array and run a for..of loop on the y coordinates of ship.ShipPlacement.
+        - Run Array sort method on the new array to sort them.
+        - Return true if y coordinate param is one less smallest number in sorted array or one greater than largest in sorted array.
+      - If y coordindate param === y coordinate of first stored coordinate of ship.shipPlacement:
+        - Create a new array and run a for...of loop in the x coordindates of ship.ShipPlacement.
+        - Run Array sort method on the new array to sort them.
+        - Return true if x coordinate param is one less smallest number in sorted array or one greater than largest in sorted array.
+      - Return false.
+    - canShipBePlacedOnSquare(x-coordinate, y-coordinate):
+      - Takes x and y coordinate params for proposed square placement.
+      - Returns false if gameboard.isSquareOpen returns false.
+      - Returns false if ship.shipPlacement.length === 0 && ship.canShipFitFromSquare() is false.
+      - Returns false if ship.areShipCoordinatesStraight returns false.
+      - Return true.
+    - addSquareToShipPlacement(x-coordinate, y-coordinate):
+      - pushes array of x and y coordinate param to shipPlacement key array.
+    - isShipFullyPlaced():
+      - Checks whether shipPlacement.length === ship.length. If so, sets fullyPlaced to true and returns true.
+      - Else, returns false.
 - Gameboard class:
   - Constructor:
     - grid. Set to createGrid method call.
@@ -73,17 +98,16 @@
       - Initialize 10x10 2d grid array.
       - Set each square to null.
       - Return grid array.
-    - placeShip(ship, x-coordinate, y-coordinate):
-      - Tries to place part of a ship in an individual square.
-      - ship param is an object previously created via the ship constructor.
-      - x and y coordinate params are square where part of ship wants to be placed.
-      - **Not necessary to guard against invalid coordinates because coordinates will come from user click on grid in UI.**
-      - Invokes isValidMove(ship, x-coordinate, y-coordinate).
-        - If true, sets grid square to that ship object and return true.
-        - Else, return false.
-    - isValidMove(ship, x-coordinate, y-coordinate):
-      - Determines whether part of a ship can be placed in a specific square on the grid.
-      -
+    - isSquareOpen(x-coordinate, y-coordinate):
+      - Determines whether a square is open for any ship placement.
+      - Double nested loop with offsets.
+        - Both for loops begin at -1 and go to 1, inclusive.
+        - Check if the offsets are both 0, if so invokes continue statement to skip.
+        - Sets two neighbor variables to x and y coordinate variables + the offset from loops.
+        - Checks whether neighbor variables are < 0 OR > 9. If so, invokes continue statement to skip.
+        - Checks whether grid array at neighborX and neighborY coordinates is not null, and returns false, if so.
+      - Returns true after the loop.
+    - **placeShip(): write this once placement logic in ship is done**
 
 ## How do you plan to organize your project files?
 
