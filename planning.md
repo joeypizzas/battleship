@@ -59,13 +59,24 @@
       - If yes, updates sunk key and returns true.
       - Otherwise, return false.
     - canShipFitFromSquare(x-coordinate, y-coordinate):
-      - Verifies full ship can fit in at least one direction from starting square.
-      - For loop checking checking each of the 4 directions, either incrementing or decrementing x OR incrementing or decrementing y. Loop size is based on the ship length - 1 (factoring in the starting square).
-        - If (!gameboard.isSquareOpen OR whatever coordinate direction is changing is one of <= 0 or => 9 (depends on if incrementing or decrementing) AND x < ship length - 1), break the loop.
-        - If get to to the last item in the loop without breaking, return true inside of the loop.
-        - Repeat loops with the other 3 directions.
-      - Return outside of the last for loop.
-      - **Add logic here to cover second square to make sure the ship can fit in the particular direction**
+      - Verifies full ship can fit in at least one direction from starting square OR a chosen direction on second sqaure.
+      - If ship.shipPlacement.length === 0:
+        - For loop checking checking each of the 4 directions, either incrementing or decrementing x OR incrementing or decrementing y. Loop size is based on the ship length - 1 (factoring in the starting square).
+          - If (!gameboard.isSquareOpen OR whatever coordinate direction is changing is one of <= 0 or => 9 (depends on if incrementing or decrementing) AND x < ship length - 1), break the loop.
+          - If get to to the last item in the loop without breaking, return true inside of the loop.
+          - Repeat loops with the other 3 directions.
+        - Return false outside of the last for loop.
+      - If ship.shipPlacement.length === 1:
+        - If x coordinate param === x coordindate of first stored coordindate of ship.shipPlacement:
+          - if y coordindate param > y coordinate of first stored coordindate:
+            - for loop checking intended direction of second square. Loop size is based on ship length - 2 (factoring in that this is the second square being placed).
+            - If (!gameboard.isSquareOpen OR y coordinate is > 9 AND y < ship length - 2), return false.
+          - if y coordindate param < y coordinate of first stored coordindate:
+            for loop checking intended direction of second square. Loop size is based on ship length - 2 (factoring in that this is the second square being placed).
+            If (!gameboard.isSquareOpen OR y coordinate is < 0 AND y < ship length - 2), return false.
+        - If y coordinate param === y coordinate of first stored square:
+          - Use the same logic as for y coordindate changing but changed to X.
+        - Return true.
     - areShipCoordinatesStraight(x-coordinate, y-coordindate):
       - Verifies whether ship coordinates follow a straight line, factoring in the new proposed square.
       - Takes x and y coordinate params for proposed square placement.
@@ -82,7 +93,8 @@
     - canShipBePlacedOnSquare(x-coordinate, y-coordinate):
       - Takes x and y coordinate params for proposed square placement.
       - Returns false if gameboard.isSquareOpen returns false.
-      - Returns false if ship.shipPlacement.length === 0 && ship.canShipFitFromSquare() is false.
+      - Returns false if ship.shipPlacement.length === 0 && ship.canShipFitFromSquare is false.
+      - Returns false if ship.shipPlacement.length === 1 && ship.canShipFitFromSquare is false.
       - Returns false if ship.areShipCoordinatesStraight returns false.
       - Return true.
     - addSquareToShipPlacement(x-coordinate, y-coordinate):
@@ -100,6 +112,7 @@
       - Return grid array.
     - isSquareOpen(x-coordinate, y-coordinate):
       - Determines whether a square is open for any ship placement.
+      - If grid array at x and y coordindate params is not null, return false.
       - Double nested loop with offsets.
         - Both for loops begin at -1 and go to 1, inclusive.
         - Check if the offsets are both 0, if so invokes continue statement to skip.
@@ -107,7 +120,10 @@
         - Checks whether neighbor variables are < 0 OR > 9. If so, invokes continue statement to skip.
         - Checks whether grid array at neighborX and neighborY coordinates is not null, and returns false, if so.
       - Returns true after the loop.
-    - **placeShip(): write this once placement logic in ship is done**
+    - placeShip(ship):
+      - Places full ship on board. Takes the full ship object as parameter. This method will only be called when a ship's placement is fully proposed, meaning each placement has been vetted.
+      - For...of loop with squares from the ship.shipPlacement array.
+      - For each square, updates the relevant square on the grid with the entire ship object. The entire object is stored there so when the square is attacked, it's easy to call the method to record the hit.
 
 ## How do you plan to organize your project files?
 
