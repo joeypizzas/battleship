@@ -105,6 +105,10 @@
 - Gameboard class:
   - Constructor:
     - grid. Set to createGrid method call.
+    - shipsSunk: initially set to 0.
+    - shipsPlaced: initially set to 0.
+    - allShipsSunk: initially false.
+    - allShipsPlaced: initially false.
   - Methods:
     - createGrid():
       - Initialize 10x10 2d grid array.
@@ -124,6 +128,18 @@
       - Places full ship on board. Takes the full ship object as parameter. This method will only be called when a ship's placement is fully proposed, meaning each placement has been vetted.
       - For...of loop with squares from the ship.shipPlacement array.
       - For each square, updates the relevant square on the grid with the entire ship object. The entire object is stored there so when the square is attacked, it's easy to call the method to record the hit.
+      - increments shipsPlaced key.
+      - If shipsPlaced === 5, sets allShipsPlaced to true.
+    - **receiveAttack**:
+- Square class:
+  - Constructor:
+    - ship key, initially null. Set to ship object when ship is placed on the square.
+    - beenAttacked, initially set top false.
+  - Methods:
+    - attack():
+      - No params.
+      - If !square.beenAttacked, set beenAttacked to true.
+  - **Update other on ship and gameboard to account for this new class**
 
 ## How do you plan to organize your project files?
 
@@ -131,6 +147,8 @@
 - ship.test.js
 - gameboard.js
 - gameboard.test.js
+- square.js
+- square.test.js
 
 ## What inputs will your program have? Will the user enter data or will you get input from somewhere else?
 
