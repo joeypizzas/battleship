@@ -23,4 +23,24 @@ export class Gameboard {
 
     return grid;
   }
+
+  isSquareOpen(x, y) {
+    if (this.grid[x][y].ship) return false;
+
+    for (let xOffset = -1; xOffset <= 1; xOffset++) {
+      for (let yOffset = -1; yOffset <= 1; yOffset++) {
+        if (xOffset === 0 && yOffset === 0) continue;
+
+        const xNeighbor = x + xOffset;
+        const yNeighbor = y + yOffset;
+
+        if (xNeighbor < 0 || xNeighbor > 9 || yNeighbor < 0 || yNeighbor > 9)
+          continue;
+
+        if (this.grid[xNeighbor][yNeighbor].ship) return false;
+      }
+    }
+
+    return true;
+  }
 }

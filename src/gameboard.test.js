@@ -36,3 +36,27 @@ describe("Gameboard constructor initalization", () => {
     expect(gameboard.allShipsPlaced).toBe(false);
   });
 });
+
+describe("Gameboard method tests", () => {
+  test("isSquareOpen with empty square", () => {
+    const gameboard = new Gameboard();
+    expect(gameboard.isSquareOpen(5, 5)).toBe(true);
+  });
+
+  test("isSquareOpen with taken square", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[5][5].ship = "test ship";
+    expect(gameboard.isSquareOpen(5, 5)).toBe(false);
+  });
+
+  test("isSquareOpen with taken adjacent square", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[4][4].ship = "test ship";
+    expect(gameboard.isSquareOpen(5, 5)).toBe(false);
+  });
+
+  test("isSquareOpen with grid boundary check", () => {
+    const gameboard = new Gameboard();
+    expect(gameboard.isSquareOpen(9, 9)).toBe(true);
+  });
+});
