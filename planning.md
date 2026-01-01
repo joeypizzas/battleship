@@ -145,6 +145,13 @@
     - attack():
       - No params.
       - If !square.beenAttacked, set beenAttacked to true.
+- Player class:
+  - Constructor (name):
+    - name: key set to name param.
+    - gameboard: new gameboard instance from class.
+  - methods:
+    - updateName(newName):
+      - sets name key to newName.
 
 ## How do you plan to organize your project files?
 
@@ -154,6 +161,8 @@
 - gameboard.test.js
 - square.js
 - square.test.js
+- player.js
+- player.test.js
 
 ## What inputs will your program have? Will the user enter data or will you get input from somewhere else?
 
