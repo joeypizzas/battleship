@@ -112,22 +112,22 @@
   - Methods:
     - createGrid():
       - Initialize 10x10 2d grid array.
-      - Set each square to null.
+      - Set each to square class constructor.
       - Return grid array.
     - isSquareOpen(x-coordinate, y-coordinate):
       - Determines whether a square is open for any ship placement.
-      - If grid array at x and y coordindate params is not null, return false.
+      - If grid array square.ship key at x and y coordindate params is not null, return false.
       - Double nested loop with offsets.
         - Both for loops begin at -1 and go to 1, inclusive.
         - Check if the offsets are both 0, if so invokes continue statement to skip.
         - Sets two neighbor variables to x and y coordinate variables + the offset from loops.
         - Checks whether neighbor variables are < 0 OR > 9. If so, invokes continue statement to skip.
-        - Checks whether grid array at neighborX and neighborY coordinates is not null, and returns false, if so.
+        - Checks whether grid array square.ship key at neighborX and neighborY coordinates is not null, and returns false, if so.
       - Returns true after the loop.
     - placeShip(ship):
       - Places full ship on board. Takes the full ship object as parameter. This method will only be called when a ship's placement is fully proposed, meaning each placement has been vetted.
       - For...of loop with squares from the ship.shipPlacement array.
-      - For each square, updates the relevant square on the grid with the entire ship object. The entire object is stored there so when the square is attacked, it's easy to call the method to record the hit.
+      - For each square, updates the relevant square on the grid with the entire ship object. The entire object is stored there in the square's ship key so when the square is attacked, it's easy to call the method to record the hit.
       - increments shipsPlaced key.
       - If shipsPlaced === 5, sets allShipsPlaced to true.
     - **receiveAttack**:
@@ -139,7 +139,6 @@
     - attack():
       - No params.
       - If !square.beenAttacked, set beenAttacked to true.
-  - **Update other on ship and gameboard to account for this new class**
 
 ## How do you plan to organize your project files?
 
