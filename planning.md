@@ -45,7 +45,7 @@
   - Constructor:
     - length (passed as parameter).
     - Number of times hit (initially 0).
-    - Whether they've been sunk (initially false).
+    - isSunk (initially false).
     - Name. Set to setShipName method call with length as parameter.
     - shipPlacement, initially set to empty array.
     - fullyPlaced: set initially to false.
@@ -54,9 +54,9 @@
       - returns ship name based on length.
     - hit():
       - increases hit key.
-    - isSunk():
-      - Checks whether ship is sunk based on number of hits.
-      - If yes, updates sunk key and returns true.
+      - Checks whether ship is sunk based on number of hits. If yes, updates isSunk key to true.
+    - checkSunkStatus():
+      - Returns true if isSunk is true. Else, returns false.
       - Otherwise, return false.
     - canShipFitFromSquare(x-coordinate, y-coordinate):
       - Verifies full ship can fit in at least one direction from starting square OR a chosen direction on second sqaure.
@@ -130,7 +130,13 @@
       - For each square, updates the relevant square on the grid with the entire ship object. The entire object is stored there in the square's ship key so when the square is attacked, it's easy to call the method to record the hit.
       - increments shipsPlaced key.
       - If shipsPlaced === 5, sets allShipsPlaced to true.
-    - **receiveAttack**:
+    - receiveAttack(x-coordinate, y-coordinate):
+      - Takes x and y coordinate of attempted attack and records either the hit or miss.
+      - Set beenAttacked key on the square to true.
+      - If ship key on square is not null.
+        - Call hit method on the ship stored in square ship key.
+        - If checkSunkStatus method on ship is true, increments shipsSunk.
+        - If shipsSunk === 5, updates allShipsSunk to true.
 - Square class:
   - Constructor:
     - ship key, initially null. Set to ship object when ship is placed on the square.
