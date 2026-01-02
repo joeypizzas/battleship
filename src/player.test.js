@@ -18,6 +18,15 @@ describe("Player class tests", () => {
     expect(player.gameboard.shipsPlaced).toBe(0);
   });
 
+  test("Player ships correctly created", () => {
+    const player = new Player("test");
+    expect(player.ships[0].name).toBe("destroyer");
+    expect(player.ships[1].name).toBe("submarine");
+    expect(player.ships[2].name).toBe("cruiser");
+    expect(player.ships[3].name).toBe("battleship");
+    expect(player.ships[4].name).toBe("carrier");
+  });
+
   test("Update name changes name key", () => {
     const player = new Player("Joey Pizzas");
     player.updateName("Joseph Pizzas");
