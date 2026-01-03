@@ -25,6 +25,7 @@ export class Gameboard {
   }
 
   isSquareOpen(x, y) {
+    if (x < 0 || x > 9 || y < 0 || y > 9) return false;
     if (this.grid[x][y].ship) return false;
 
     for (let xOffset = -1; xOffset <= 1; xOffset++) {
