@@ -1,6 +1,7 @@
 // Ship class tests
 
 import { Ship } from "./ship.js";
+import { Gameboard } from "./gameboard.js";
 
 describe("Ship constructor tests", () => {
   test("Length correctly set", () => {
@@ -33,5 +34,64 @@ describe("Ship method tests", () => {
   test("setShipName with battleship", () => {
     const ship = new Ship("battleship");
     expect(ship.name).toBe("battleship");
+  });
+
+  test("Hit method correctly increases hits", () => {
+    const ship = new Ship("destroyer");
+    ship.hit();
+    expect(ship.hits).toBe(1);
+  });
+
+  test("Hit method correctly updates isSunk", () => {
+    const ship = new Ship("destroyer");
+    ship.hit();
+    ship.hit();
+    expect(ship.isSunk).toBe(true);
+  });
+
+  test("checkSunkStatus returns correct status", () => {
+    const ship = new Ship("destroyer");
+    ship.hit();
+    ship.hit();
+    expect(ship.checkSunkStatus()).toBe(true);
+  });
+
+  test("canShipFitFromSquare returns false if ship can't fit from first square", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[0][1].ship = "test";
+    gameboard.grid[1][0].ship = "test";
+    const ship = new Ship("destroyer");
+    expect(ship.canShipFitFromSquare(0, 0, gameboard)).toBe(false);
+  });
+
+  test("canShipFitFromSquare returns true if one path from first square", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[2][0].ship = "test";
+    const ship = new Ship("destroyer");
+    expect(ship.canShipFitFromSquare(0, 0, gameboard)).toBe(true);
+  });
+
+  test("canShipFitFromSquare returns false if ship can't fit from second square", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[2][0].ship = "test";
+    const ship = new Ship("destroyer");
+    ship.shipPlacement.push([0, 0]);
+    expect(ship.canShipFitFromSquare(1, 0, gameboard)).toBe(false);
+  });
+
+  test("canShipFitFromSquare returns false with longer ship that won't fit from second square", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[3][0].ship = "test";
+    const ship = new Ship("submarine");
+    ship.shipPlacement.push([0, 0]);
+    expect(ship.canShipFitFromSquare(1, 0, gameboard)).toBe(false);
+  });
+
+  test("canShipFitFromSquare returns true with one path from second square", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[3][0].ship = "test";
+    const ship = new Ship("submarine");
+    ship.shipPlacement.push([0, 0]);
+    expect(ship.canShipFitFromSquare(0, 1, gameboard)).toBe(true);
   });
 });
