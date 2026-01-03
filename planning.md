@@ -72,8 +72,8 @@
             - for loop checking intended direction of second square. Loop size is based on ship length - 2 (factoring in that this is the second square being placed).
             - If (!gameboard.isSquareOpen OR y coordinate is > 9 AND y < ship length - 2), return false.
           - if y coordindate param < y coordinate of first stored coordindate:
-            for loop checking intended direction of second square. Loop size is based on ship length - 2 (factoring in that this is the second square being placed).
-            If (!gameboard.isSquareOpen OR y coordinate is < 0 AND y < ship length - 2), return false.
+            - for loop checking intended direction of second square. Loop size is based on ship length - 2 (factoring in that this is the second square being placed).
+            - If (!gameboard.isSquareOpen OR y coordinate is < 0 AND y < ship length - 2), return false.
         - If y coordinate param === y coordinate of first stored square:
           - Use the same logic as for y coordindate changing but changed to X.
         - Return true.
