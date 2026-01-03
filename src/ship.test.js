@@ -94,4 +94,24 @@ describe("Ship method tests", () => {
     ship.shipPlacement.push([0, 0]);
     expect(ship.canShipFitFromSquare(0, 1, gameboard)).toBe(true);
   });
+
+  test("areShipCoordinatesStraight returns false if coordinates not in straight line", () => {
+    const ship = new Ship("submarine");
+    ship.shipPlacement.push([0, 0]);
+    expect(ship.areShipCoordinatesStraight(5, 5)).toBe(false);
+  });
+
+  test("areShipCoordinatesStraight returns false with not-straight coordinates adjacent to starting square", () => {
+    const ship = new Ship("submarine");
+    ship.shipPlacement.push([0, 0]);
+    ship.shipPlacement.push([1, 0]);
+    expect(ship.areShipCoordinatesStraight(0, 1)).toBe(false);
+  });
+
+  test("areShipCoordinatesStraight returns true when coordinates are straight", () => {
+    const ship = new Ship("submarine");
+    ship.shipPlacement.push([0, 0]);
+    ship.shipPlacement.push([1, 0]);
+    expect(ship.areShipCoordinatesStraight(2, 0)).toBe(true);
+  });
 });

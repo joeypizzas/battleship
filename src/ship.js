@@ -96,4 +96,44 @@ export class Ship {
       return true;
     }
   }
+
+  areShipCoordinatesStraight(x, y) {
+    if (this.shipPlacement.length === 0) return true;
+
+    if (
+      x === this.shipPlacement[0][0] &&
+      x === this.shipPlacement[this.shipPlacement.length - 1][0]
+    ) {
+      const yCoordinates = [];
+
+      for (const coordinates of this.shipPlacement) {
+        yCoordinates.push(coordinates[1]);
+      }
+
+      if (
+        Math.max(...yCoordinates) + 1 === y ||
+        Math.min(...yCoordinates) - 1 === y
+      )
+        return true;
+    }
+
+    if (
+      y === this.shipPlacement[0][1] &&
+      y === this.shipPlacement[this.shipPlacement.length - 1][1]
+    ) {
+      const xCoordinates = [];
+
+      for (const coordinates of this.shipPlacement) {
+        xCoordinates.push(coordinates[0]);
+      }
+
+      if (
+        Math.max(...xCoordinates) + 1 === x ||
+        Math.min(...xCoordinates) - 1 === x
+      )
+        return true;
+    }
+
+    return false;
+  }
 }
