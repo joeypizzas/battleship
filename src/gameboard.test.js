@@ -88,4 +88,48 @@ describe("Gameboard method tests", () => {
     gameboard.placeShip(ship);
     expect(gameboard.allShipsPlaced).toBe(true);
   });
+
+  test("receiveAttack records miss", () => {
+    const gameboard = new Gameboard();
+    gameboard.receiveAttack(0, 0);
+    expect(gameboard.grid[0][0].beenAttacked).toBe(true);
+  });
+
+  test("receiveAttack records hit", () => {
+    const gameboard = new Gameboard();
+    const ship = new Ship("destroyer");
+    ship.addSquareToShipPlacement(0, 0, gameboard);
+    ship.addSquareToShipPlacement(1, 0, gameboard);
+    gameboard.placeShip(ship);
+    gameboard.receiveAttack(0, 0);
+    expect(gameboard.grid[0][0].beenAttacked).toBe(true);
+    expect(gameboard.grid[0][0].ship.hits).toEqual(1);
+  });
+
+  test("receiveAttack records sunk ship", () => {
+    const gameboard = new Gameboard();
+    const ship = new Ship("destroyer");
+    ship.addSquareToShipPlacement(0, 0, gameboard);
+    ship.addSquareToShipPlacement(1, 0, gameboard);
+    gameboard.placeShip(ship);
+    gameboard.receiveAttack(0, 0);
+    gameboard.receiveAttack(1, 0);
+    expect(gameboard.grid[1][0].beenAttacked).toBe(true);
+    expect(gameboard.grid[1][0].ship.hits).toEqual(2);
+    expect(gameboard.grid[1][0].ship.isSunk).toBe(true);
+    expect(gameboard.shipsSunk).toEqual(1);
+    expect(gameboard.allShipsSunk).toBe(false);
+  });
+
+  test("receiveAttack records all sunk ships", () => {
+    const gameboard = new Gameboard();
+    gameboard.shipsSunk = 4;
+    const ship = new Ship("destroyer");
+    ship.addSquareToShipPlacement(0, 0, gameboard);
+    ship.addSquareToShipPlacement(1, 0, gameboard);
+    gameboard.placeShip(ship);
+    gameboard.receiveAttack(0, 0);
+    gameboard.receiveAttack(1, 0);
+    expect(gameboard.allShipsSunk).toBe(true);
+  });
 });

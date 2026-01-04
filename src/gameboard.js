@@ -57,4 +57,15 @@ export class Gameboard {
 
     return true;
   }
+
+  receiveAttack(x, y) {
+    if (!this.grid[x][y].beenAttacked) this.grid[x][y].beenAttacked = true;
+
+    if (this.grid[x][y].ship) {
+      this.grid[x][y].ship.hit();
+
+      if (this.grid[x][y].ship.checkSunkStatus()) this.shipsSunk++;
+      if (this.shipsSunk === 5) this.allShipsSunk = true;
+    }
+  }
 }
