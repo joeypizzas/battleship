@@ -114,4 +114,42 @@ describe("Ship method tests", () => {
     ship.shipPlacement.push([1, 0]);
     expect(ship.areShipCoordinatesStraight(2, 0)).toBe(true);
   });
+
+  test("canShipBePlacedOnSquare returns false with not open square", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[1][1].ship = "test";
+    const ship = new Ship("destroyer");
+    expect(ship.canShipBePlacedOnSquare(0, 0, gameboard)).toBe(false);
+  });
+
+  test("canShipBePlacedOnSquare returns false with ship won't fit first square", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[2][0].ship = "test";
+    gameboard.grid[0][2].ship = "test";
+    const ship = new Ship("destroyer");
+    expect(ship.canShipBePlacedOnSquare(0, 0, gameboard)).toBe(false);
+  });
+
+  test("canShipBePlacedOnSquare returns false with ship won't fit second square", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[2][0].ship = "test";
+    const ship = new Ship("destroyer");
+    ship.shipPlacement.push([0, 0]);
+    expect(ship.canShipBePlacedOnSquare(1, 0, gameboard)).toBe(false);
+  });
+
+  test("canShipBePlacedOnSquare returns false with not straight coordinates", () => {
+    const gameboard = new Gameboard();
+    const ship = new Ship("submarine");
+    ship.shipPlacement.push([0, 0], [1, 0]);
+    expect(ship.canShipBePlacedOnSquare(0, 1, gameboard)).toBe(false);
+  });
+
+  test("canShipBePlacedOnSquare returns true when square can be placed", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[1][0].ship = "test";
+    const ship = new Ship("submarine");
+    ship.shipPlacement.push([0, 0], [0, 1]);
+    expect(ship.canShipBePlacedOnSquare(0, 2, gameboard)).toBe(true);
+  });
 });

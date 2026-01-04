@@ -136,4 +136,20 @@ export class Ship {
 
     return false;
   }
+
+  canShipBePlacedOnSquare(x, y, gameboard) {
+    if (!gameboard.isSquareOpen(x, y)) return false;
+
+    if (
+      (this.shipPlacement.length === 0 &&
+        !this.canShipFitFromSquare(x, y, gameboard)) ||
+      (this.shipPlacement.length === 1 &&
+        !this.canShipFitFromSquare(x, y, gameboard))
+    )
+      return false;
+
+    if (!this.areShipCoordinatesStraight(x, y)) return false;
+
+    return true;
+  }
 }
