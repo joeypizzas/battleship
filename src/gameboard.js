@@ -44,4 +44,17 @@ export class Gameboard {
 
     return true;
   }
+
+  placeShip(ship) {
+    if (!ship.isShipFullyPlaced()) return false;
+
+    for (const coordinates of ship.shipPlacement) {
+      this.grid[coordinates[0]][coordinates[1]].ship = ship;
+    }
+
+    this.shipsPlaced++;
+    if (this.shipsPlaced === 5) this.allShipsPlaced = true;
+
+    return true;
+  }
 }

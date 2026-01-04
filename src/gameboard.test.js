@@ -1,6 +1,7 @@
 // Gameboard class tests
 
 import { Gameboard } from "./gameboard.js";
+import { Ship } from "./ship.js";
 
 describe("Gameboard constructor initalization", () => {
   const gameboard = new Gameboard();
@@ -58,5 +59,33 @@ describe("Gameboard method tests", () => {
   test("isSquareOpen with grid boundary check", () => {
     const gameboard = new Gameboard();
     expect(gameboard.isSquareOpen(9, 9)).toBe(true);
+  });
+
+  test("placeShip returns false when partially placed ship is passed", () => {
+    const gameboard = new Gameboard();
+    const ship = new Ship("destroyer");
+    ship.addSquareToShipPlacement(0, 0, gameboard);
+    expect(gameboard.placeShip(ship)).toBe(false);
+  });
+
+  test("placeShip places entire ship", () => {
+    const gameboard = new Gameboard();
+    const ship = new Ship("destroyer");
+    ship.addSquareToShipPlacement(0, 0, gameboard);
+    ship.addSquareToShipPlacement(1, 0, gameboard);
+    gameboard.placeShip(ship);
+    expect(gameboard.grid[0][0].ship).toBe(ship);
+    expect(gameboard.grid[1][0].ship).toBe(ship);
+    expect(gameboard.shipsPlaced).toBe(1);
+  });
+
+  test("placeShip changes allShipsPlace status if warranted", () => {
+    const gameboard = new Gameboard();
+    gameboard.shipsPlaced = 4;
+    const ship = new Ship("destroyer");
+    ship.addSquareToShipPlacement(0, 0, gameboard);
+    ship.addSquareToShipPlacement(1, 0, gameboard);
+    gameboard.placeShip(ship);
+    expect(gameboard.allShipsPlaced).toBe(true);
   });
 });
