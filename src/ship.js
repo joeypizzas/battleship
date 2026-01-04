@@ -98,11 +98,13 @@ export class Ship {
   }
 
   areShipCoordinatesStraight(x, y) {
+    // Coordinates are always straight for the first square
     if (this.shipPlacement.length === 0) return true;
 
+    // Confirms if ship is moving along y axis
     if (
       x === this.shipPlacement[0][0] &&
-      x === this.shipPlacement[this.shipPlacement.length - 1][0]
+      x === this.shipPlacement[this.shipPlacement.length - 1][0] // Guards against case where ship changes direction from start mid-placement
     ) {
       const yCoordinates = [];
 
@@ -110,6 +112,7 @@ export class Ship {
         yCoordinates.push(coordinates[1]);
       }
 
+      // New y needs to be one more or less than max/min y to be straight along y axis
       if (
         Math.max(...yCoordinates) + 1 === y ||
         Math.min(...yCoordinates) - 1 === y
@@ -117,6 +120,7 @@ export class Ship {
         return true;
     }
 
+    // Confirms if ship is moving along x axis
     if (
       y === this.shipPlacement[0][1] &&
       y === this.shipPlacement[this.shipPlacement.length - 1][1]
@@ -127,6 +131,7 @@ export class Ship {
         xCoordinates.push(coordinates[0]);
       }
 
+      // New x needs to be one more or less than max/min x to be straight along x axis
       if (
         Math.max(...xCoordinates) + 1 === x ||
         Math.min(...xCoordinates) - 1 === x
