@@ -152,4 +152,46 @@ describe("Ship method tests", () => {
     ship.shipPlacement.push([0, 0], [0, 1]);
     expect(ship.canShipBePlacedOnSquare(0, 2, gameboard)).toBe(true);
   });
+
+  test("addSquareToShipPlacement when placement fails", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[2][0].ship = "test";
+    gameboard.grid[0][2].ship = "test";
+    const ship = new Ship("destroyer");
+    expect(ship.addSquareToShipPlacement(0, 0, gameboard)).toBe(false);
+  });
+
+  test("addSquareToShipPlacement when placement succeeds", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[2][0].ship = "test";
+    const ship = new Ship("destroyer");
+    ship.addSquareToShipPlacement(0, 0, gameboard);
+    expect(ship.shipPlacement[0]).toEqual([0, 0]);
+  });
+
+  test("addSquareToShipPlacement when ship is fully placed", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[2][0].ship = "test";
+    const ship = new Ship("destroyer");
+    ship.addSquareToShipPlacement(0, 0, gameboard);
+    ship.addSquareToShipPlacement(0, 1, gameboard);
+    expect(ship.fullyPlaced).toBe(true);
+  });
+
+  test("isShipFullyPlaced returns false when ship isn't placed", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[2][0].ship = "test";
+    const ship = new Ship("destroyer");
+    ship.addSquareToShipPlacement(0, 0, gameboard);
+    expect(ship.isShipFullyPlaced()).toBe(false);
+  });
+
+  test("isShipFullyPlaced returns true when ship is placed", () => {
+    const gameboard = new Gameboard();
+    gameboard.grid[2][0].ship = "test";
+    const ship = new Ship("destroyer");
+    ship.addSquareToShipPlacement(0, 0, gameboard);
+    ship.addSquareToShipPlacement(0, 1, gameboard);
+    expect(ship.isShipFullyPlaced()).toBe(true);
+  });
 });

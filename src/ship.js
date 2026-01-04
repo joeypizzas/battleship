@@ -152,4 +152,19 @@ export class Ship {
 
     return true;
   }
+
+  addSquareToShipPlacement(x, y, gameboard) {
+    if (!this.canShipBePlacedOnSquare(x, y, gameboard)) return false;
+
+    this.shipPlacement.push([x, y]);
+    if (this.shipPlacement.length === this.length) this.fullyPlaced = true;
+
+    return true;
+  }
+
+  isShipFullyPlaced() {
+    if (this.fullyPlaced === false) return false;
+
+    return true;
+  }
 }
