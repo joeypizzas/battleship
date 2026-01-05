@@ -166,4 +166,34 @@
 
 ## What inputs will your program have? Will the user enter data or will you get input from somewhere else?
 
-## Given your inputs, what are the steps necessary to return the desired output?
+- Player and computer name.
+  - Player name comes from form input. Otherwise defaulted.
+  - Computer name is defaulted.
+- Ship placement:
+  - Player:
+    - Player is prompted to select ships and then place them on the board.
+    - After they select a ship, they're prompted to select squares on the board to place the ship. They can't select a different ship until the current selected ship us fully placed.
+    - Once they place all ships, the game begins.
+  - Computer:
+    - Computer ship placement follows the same general structure, but it's randomized. Likely with math.random for generating initial square and then maybe moving along axis for subsequent moves OR just generally random moves. Though would be potentially a lot of moves to get random moves that work for fully placing a ship.
+    - Computer player and ship placement begins at the same time as the player. Their grid is just hidden on the screen until the game begins.
+  - Game:
+    - Player makes first move.
+    - Player selects ship on computer's gameboard to record their attack.
+    - Computer attacks are randomized with math.Random. Perhaps have the computer try adjacent slots if it gets a hit.
+    - Players get to continue attacks after a hit. Game changes turn after a miss.
+    - After each attack, check for allShipsSunk, because that determines the game winner.
+    - After each attack, record it both on the board, but also on the ship container beneath the board to see which ship has received a hit.
+    - Suite of messages to be displayed in the instruction area throughout the game, including:
+      - Select ship to place
+      - Placing ship on squares
+      - Start of game indicating first move
+      - Each player's move
+      - A hit OR miss.
+      - A sunk ship.
+      - All ships sunk, announce the winner.
+
+## How do you plan to design your UI and link it to the application state?
+
+- Hardcode the UI first:
+  -
