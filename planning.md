@@ -29,7 +29,7 @@
     - During game specifics:
       - When game starts, a second board is added to the screen, for the computer. It's initially blank (because you can't see the computer's ships). There is also a ship container beneath it to indicate hits.
       - Player always goes first, before computer.
-      - Player selects a square on grid to make an attack. Hits are indicated on the board, either with some kind of icon or changing the color. Misses are the same, but with a different color, likely red.
+      - Player selects a square on grid to make an attack. Hits are indicated on the board as red square. Misses are white square. Placed ships that aren't hit are green squares.
       - Instructions share whether it was a hit or miss and then whether you need to make another pick or if it's the computer's turn. To make the computer's turn believable, I'll want to add a 5s delay for each computer turn.
       - If either player gets a hit, they get to continue making attacks until they get a miss.
     - Button specifics:
@@ -195,5 +195,30 @@
 
 ## How do you plan to design your UI and link it to the application state?
 
-- Hardcode the UI first:
-  -
+- Hardcode all the UI first. Then, write the methods that add the UI and control the game.
+- The following UI can be permanently hardcoded:
+  - Header.
+  - Instruction box in game area (contents will change).
+  - Footer.
+- Rest of game area will be dynamically added.
+- gameUI module:
+  - addBoard method:
+    - Takes player object as parameter. Stores this on the board in some way such moves can be mapped to the player.
+    - Adds the div containing both the gameboard + the ship hangar below the gameboard.
+    - Store ship names on the ship divs in the hangar to identify which ship is selected.
+    - Doesn't register any placed ships/hits/misses yet. Only called at the beginning of the game.
+  - removeBoard method:
+    - Takes player object as parameter.
+    - Removes the div corresponding to the player board.
+    - Used only when resetting game.
+  - selectShipInUI method:
+    - Called when human player selects ship they want to place at the beginning of the game.
+    - Calls method on the player that adds ship to the selected ship key on the player.
+    - Highlights the ship in the hangar to indicate that it is ready to be placed.
+    - Calls method from the gameController UI that announces to place that ship.
+  - deSelectShipInUI method:
+    - Called when human player fully places ship.
+    - Removes highlight from ship in hangar.
+    - Calls method that removes the ship from the selected ship key on the player.
+    - Calls method from gameController UI that checks whether all ships are placed and either starts game or prompts to select a new ship.
+- ## gameContoller module:
