@@ -202,11 +202,12 @@
   - Footer.
 - Rest of game area will be dynamically added.
 - gameUI module:
-  - addBoardToUI method:
-    - Takes player object as parameter. Stores this on the board in some way such moves can be mapped to the player.
+  - addBoardsToUI method:
+    - Takes player objects as parameter. Stores this on the board in some way such moves can be mapped to the player.
     - Adds the div containing both the gameboard + the ship hangar below the gameboard.
     - Store ship names on the ship divs in the hangar to identify which ship is selected.
     - Doesn't register any placed ships/hits/misses yet. Only called at the beginning of the game.
+    - If the name of the player object is computer, then it makes that board hidden and not take up space to start.
   - removeBoardFromUI method:
     - Takes player object as parameter.
     - Removes the div corresponding to the player board.
@@ -215,10 +216,12 @@
     - Called when human player selects ship they want to place at the beginning of the game.
     - Calls method on the player that adds ship to the selected ship key on the player.
     - Highlights the ship in the hangar to indicate that it is ready to be placed.
+    - Removes selectable class from all ships in hangar so they can't be selected while a ship is selected.
     - Calls method from the gameController that announces to place that ship.
   - deselectShipInUI method:
     - Called when human player fully places ship.
-    - Removes highlight from ship in hangar.
+    - Removes highlight from ship in hangar and, removes selected class and adds placed class to the ship in the hangar.
+    - Adds selectable class back to all ships that don't have placed class.
     - Calls method that removes the ship from the selected ship key on the player.
     - Calls method from gameController that checks whether all ships are placed and either starts game or prompts to select a new ship.
   - placeShipOnSquareInUI:
@@ -236,7 +239,21 @@
     - Calls gameboard.receiveAttack to record the attack.
     - Records the attack in the gameboard and the hangar.
     - Announces next step from gameController based on whether it was a hit or miss.
+    - If it was a miss updates turn controller. If turn is now computer's, calls method that has them make moves.
     - Checks whether all ships were sent. If so, announces winner.
+  - announceNextStepInUI:
+    - Takes message string parameter.
+    - Sets text content of instruction area to new message.
   - initUIEventListeners:
+    - Calls addBoards method.
+    - Adds event listeners on boards and hangars.
+    - Adds event listeners on reset game and change name buttons.
+- gameContoller module:
+  - startPregame method:
+    - initializes human and computer players.
+    - calls initUIEventListeners.
+    - Calls methods that have computer place their ships.
+    - Announces player to select first ship to begin placement.
+  - startGame method:
+    - called when human player places last ship.
     -
-- ## gameContoller module:
