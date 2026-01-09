@@ -202,12 +202,12 @@
   - Footer.
 - Rest of game area will be dynamically added.
 - gameUI module:
-  - addBoard method:
+  - addBoardToUI method:
     - Takes player object as parameter. Stores this on the board in some way such moves can be mapped to the player.
     - Adds the div containing both the gameboard + the ship hangar below the gameboard.
     - Store ship names on the ship divs in the hangar to identify which ship is selected.
     - Doesn't register any placed ships/hits/misses yet. Only called at the beginning of the game.
-  - removeBoard method:
+  - removeBoardFromUI method:
     - Takes player object as parameter.
     - Removes the div corresponding to the player board.
     - Used only when resetting game.
@@ -215,10 +215,28 @@
     - Called when human player selects ship they want to place at the beginning of the game.
     - Calls method on the player that adds ship to the selected ship key on the player.
     - Highlights the ship in the hangar to indicate that it is ready to be placed.
-    - Calls method from the gameController UI that announces to place that ship.
-  - deSelectShipInUI method:
+    - Calls method from the gameController that announces to place that ship.
+  - deselectShipInUI method:
     - Called when human player fully places ship.
     - Removes highlight from ship in hangar.
     - Calls method that removes the ship from the selected ship key on the player.
-    - Calls method from gameController UI that checks whether all ships are placed and either starts game or prompts to select a new ship.
+    - Calls method from gameController that checks whether all ships are placed and either starts game or prompts to select a new ship.
+  - placeShipOnSquareInUI:
+    - Called when player with selected ship attempts to place part of ship on a square.
+    - Calls canShipBePlacedOnSquare method for selected ship on the player.
+      - If yes:
+        - calls ship.addSquareToShipPlacement
+        - Updates board and hangar squares to show placement.
+        - If gameboard.placeShip returns true, calls deSelectShipInUI.
+        - If it returns false, then calls method from gameController that prompts to select a new square to continue placing the ship.
+      - If no:
+        - Calls method from gameController UI that says the ship can't be placed there and to select a new square.
+  - attackSquareInUI:
+    - Called when player selects square to attack during game.
+    - Calls gameboard.receiveAttack to record the attack.
+    - Records the attack in the gameboard and the hangar.
+    - Announces next step from gameController based on whether it was a hit or miss.
+    - Checks whether all ships were sent. If so, announces winner.
+  - initUIEventListeners:
+    -
 - ## gameContoller module:
