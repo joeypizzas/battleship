@@ -243,7 +243,7 @@
     - Calls gameboard.receiveAttack to record the attack.
     - Records the attack in the gameboard and the hangar.
     - Announces next step from gameController based on whether it was a hit or miss.
-    - If it was a miss updates turn controller. If turn is now computer's, calls method that has them make moves.
+    - If it was a miss updates turn controller.
     - Checks whether all ships were sent. If so, announces winner.
   - announceNextStepInUI:
     - Takes message string parameter.
@@ -264,7 +264,7 @@
   - currentPlayer global variable in the module. Initially undefined.
   - changePlayerTurn method:
     - If currentPlayer is undefined, sets it to human.
-    - If currentPlayer is human, sets it to computer.
+    - If currentPlayer is human, sets it to computer and calls computerAttack.
     - If currentPlayer is computer, sets it to human.
   - resetGame method:
     - Invoked when a player taps the reset game method.
@@ -293,12 +293,20 @@
     - Runs a switch with different cases based on the type key from the object param.
     - Returns a message using payload details
     - This method is invoked in UI module in method that updates instruction area after attack or placement.
+  - computerAttack method:
+    - Takes human player as param (needed for determineAttack from computer module).
+    - While loop that runs while currentPlayer === computer.
+      - sets attackCoordinates = computer.determineAttack().
+      - invokes UI method attackSquareInUI with x and y coordinates from attackCoordinates array.
+      - If attack was a hit:
+        - Use double loop with offset to check 8 squares around hit square.
+          - Add any squares that haven't already been queue to the targetQueue OR hit OR out of bounds OR the current attack square to the targetQueue.
 - computer.js module
   - Handles logic for determining where computer placements and attacks occur. Including:
     - Selecting ships.
     - Handling placements.
     - Determining where to attack. This is then returned to game controller module to handle computer attack.
-  - It's an object, computerLogic than be exported. Important for updating targetQueue, which is an array variable used for tracking squares to attack after a hit.
+  - It's an object, computerLogic than be exported. Important for updating targetQueue, which is an array variable used for tracking squares to attack after a hit. Returns placeShips method, determineAttack method, addToTargetQueue, getTargetQueue.
   - placeShips method:
     - Takes player parameter (which is computer).
     - initializes new array shipsForPlacement and sets it to ships array from player param.
@@ -308,5 +316,17 @@
         - Calls ship.addSquareToShipPlacement(Math.floor(Math.random() times 10), Math.floor(Math.random() times 10), gameboard). This ensures a random x and y coordinate for the attempted placement.
         - Calls gameboard.placeShip(selectedShip).
   - determineAttack method:
+    - takes human player as parameter (needed to make sure not picking square that the computer has already attacked).
     - if targetQueue is empty:
-      - Remove first square from the
+      - let x = Math.floor(Math.random()) times 10.
+      - let y = Math.floor(Math.random()) times 10.
+      - If human player gameboard at square with x and y has not been attacked, return array with x and y.
+      - If it has been attacked, while loop that runs until human player gameboard with x y and has not been attacked.
+        - Updates x and y to new iterations of Math.floor(Math.random()) times 10.
+      - Returns an array with x and y outside the loop.
+    - If targetQueue is not empty:
+      - returns targetQueue.shift().
+  - addToTargetQueue(coordinates).
+    - pushes coordinates param to targetQueue.
+  - getTargetQueue().
+    - returns targetQueue.
