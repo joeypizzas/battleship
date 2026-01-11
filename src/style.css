@@ -11,6 +11,7 @@
 
   /* Game pieces */
   --ship-color: #8fafbf;
+  --ship-placed-color: #246b63;
   --hit-color: #e63946;
   --miss-color: #b0bec5;
 
@@ -52,6 +53,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
+  padding-bottom: 2.25rem;
   font-size: 2.25rem;
   font-weight: 700;
   background-color: var(--bg-water-mid);
@@ -61,6 +63,18 @@ body {
 #game-area {
   flex: 1;
   background-color: var(--bg-water-mid);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#message-area {
+  padding: 1.25rem;
+  background-color: var(--bg-water-light);
+  border: 2px solid var(--text-primary);
+  border-radius: 5px;
+  width: 25%;
+  color: var(--text-primary);
 }
 
 #footer {
