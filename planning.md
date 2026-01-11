@@ -293,10 +293,11 @@
     - Runs a switch with different cases based on the type key from the object param.
     - Returns a message using payload details
     - This method is invoked in UI module in method that updates instruction area after attack or placement.
-  - computerAttack method:
+  - async computerAttack method:
     - Takes human player as param (needed for determineAttack from computer module).
     - While loop that runs while currentPlayer === computer.
       - sets attackCoordinates = computer.determineAttack().
+      - 3-5s timeout.
       - invokes UI method attackSquareInUI with x and y coordinates from attackCoordinates array.
       - If attack was a hit:
         - Use double loop with offset to check 8 squares around hit square.
