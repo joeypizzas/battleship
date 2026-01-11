@@ -163,6 +163,10 @@
 - square.test.js
 - player.js
 - player.test.js
+- gameUI.js
+- gameController.js
+- computer.js
+- computer.test.js
 
 ## What inputs will your program have? Will the user enter data or will you get input from somewhere else?
 
@@ -210,7 +214,7 @@
     - If the name of the player object is computer, then it makes that board hidden and not take up space to start.
   - removeBoardFromUI method:
     - Takes player object as parameter.
-    - Removes the div corresponding to the player board.
+    - Removes the div corresponding to the player board and hangar.
     - Used only when resetting game.
   - selectShipInUI method:
     - Called when human player selects ship they want to place at the beginning of the game.
@@ -256,4 +260,53 @@
     - Announces player to select first ship to begin placement.
   - startGame method:
     - called when human player places last ship.
-    -
+    - Sets turn management controller to human for making first move (this controls whether the player selecting a square on the board tries to attack it during game).
+  - currentPlayer global variable in the module. Initially undefined.
+  - changePlayerTurn method:
+    - If currentPlayer is undefined, sets it to human.
+    - If currentPlayer is human, sets it to computer.
+    - If currentPlayer is computer, sets it to human.
+  - resetGame method:
+    - Invoked when a player taps the reset game method.
+    - changes currentPlayer back to undefined.
+    - resets custom set human name.
+    - invokes removeBoardFromUI.
+    - invokes startPregame method.
+  - determineAttackEvent method:
+    - Takes a game context, which is the receiver's gameboard square where the attack occurred.
+    - Checks for states such as:
+      - Hit
+      - Miss
+      - Ship sunk
+      - all ships sunk (game over)
+    - returns object with a type key (type: "HIT") and a payload key (payload: {attacker: currentPlayer, receiver: from parameter}).
+  - determinePlacementEvent method:
+    - Takes square placement and player params.
+    - Checks for states using square placement on selected ship stored on player to determine whether there was a:
+      - Ship placement on square
+      - Invalid placement
+      - Ship placement finished
+      - All ships now placed
+    - Returns object with a type key (type: "SQUARE_PLACEMENT") and an optional payload key (payload: {ship: player.selectedShip}) that has the selected ship used for messages.
+  - getGameMessage method:
+    - takes an object parameter (result of determineAttackEvent OR determinePlacementEvent methods).
+    - Runs a switch with different cases based on the type key from the object param.
+    - Returns a message using payload details
+    - This method is invoked in UI module in method that updates instruction area after attack or placement.
+- computer.js module
+  - Handles logic for determining where computer placements and attacks occur. Including:
+    - Selecting ships.
+    - Handling placements.
+    - Determining where to attack. This is then returned to game controller module to handle computer attack.
+  - It's an object, computerLogic than be exported. Important for updating targetQueue, which is an array variable used for tracking squares to attack after a hit.
+  - placeShips method:
+    - Takes player parameter (which is computer).
+    - initializes new array shipsForPlacement and sets it to ships array from player param.
+    - While loop that runs while gameboard ships fully placed is false.
+      - Sets selectedShip key on player to shipsForPlacement.shift(). This makes it the first ship from the array and removes it from the array.
+      - While loop that runs while the selectedShip isn't fullyPlaced.
+        - Calls ship.addSquareToShipPlacement(Math.floor(Math.random() times 10), Math.floor(Math.random() times 10), gameboard). This ensures a random x and y coordinate for the attempted placement.
+        - Calls gameboard.placeShip(selectedShip).
+  - determineAttack method:
+    - if targetQueue is empty:
+      - Remove first square from the
