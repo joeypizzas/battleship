@@ -53,7 +53,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
-  padding-bottom: 2.25rem;
+  padding-bottom: 2rem;
   font-size: 2.25rem;
   font-weight: 700;
   background-color: var(--bg-water-mid);
@@ -66,15 +66,55 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 2rem;
 }
 
 #message-area {
-  padding: 1.25rem;
+  padding: 1rem;
   background-color: var(--bg-water-light);
   border: 2px solid var(--text-primary);
   border-radius: 5px;
   width: 25%;
   color: var(--text-primary);
+}
+
+#gameboards-and-hangars {
+  display: flex;
+}
+
+.gameboard-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.gameboard-name {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.gameboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.square-row {
+  display: flex;
+}
+
+.square {
+  background-color: var(--bg-water-light);
+  border-right: 2px solid var(--text-primary);
+  border-bottom: 2px solid var(--text-primary);
+  padding: 1rem;
+}
+
+.top-row {
+  border-top: 2px solid var(--text-primary);
+}
+
+.left-column {
+  border-left: 2px solid var(--text-primary);
 }
 
 #footer {
