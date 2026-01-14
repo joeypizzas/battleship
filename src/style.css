@@ -44,19 +44,18 @@ body {
 #main-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: 100%;
 }
 
 #header {
+  background-color: var(--bg-water-deep);
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 1.5rem;
-  padding-bottom: 2rem;
+}
+
+#game-title {
   font-size: 2.25rem;
   font-weight: 700;
-  background-color: var(--bg-water-mid);
   color: var(--text-primary);
 }
 
@@ -71,10 +70,7 @@ body {
 
 #message-and-new {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  gap: 1rem;
 }
 
 #message-area {
