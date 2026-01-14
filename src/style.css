@@ -69,12 +69,29 @@ body {
   gap: 2rem;
 }
 
+#message-and-new {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
 #message-area {
   padding: 1rem;
   background-color: var(--bg-water-light);
   border: 2px solid var(--text-primary);
   border-radius: 5px;
   width: 25%;
+  color: var(--text-primary);
+}
+
+#new-game {
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border-radius: 3px;
+  border: 1px solid var(--text-primary);
+  cursor: pointer;
+  background-color: var(--bg-water-light);
   color: var(--text-primary);
 }
 
@@ -85,12 +102,27 @@ body {
 .gameboard-area {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.5rem;
+}
+
+.name-and-edit {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
 }
 
 .gameboard-name {
   color: var(--text-primary);
   font-weight: 700;
+}
+
+.edit-name {
+  cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid var(--text-primary);
+  color: var(--text-primary);
+  background-color: var(--bg-water-light);
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
 }
 
 .gameboard {
