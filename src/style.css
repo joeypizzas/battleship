@@ -11,7 +11,7 @@
 
   /* Game pieces */
   --ship-color: #8fafbf;
-  --ship-placed-color: #246b63;
+  --ship-placed-color: #2f8f7f;
   --hit-color: #e63946;
   --miss-color: #b0bec5;
 
@@ -50,22 +50,9 @@ body {
 #header {
   background-color: var(--bg-water-deep);
   display: flex;
+  justify-content: space-around;
   align-items: center;
-}
-
-#game-title {
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-#game-area {
-  flex: 1;
-  background-color: var(--bg-water-mid);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 2rem;
+  padding: 1rem 0 1rem 0;
 }
 
 #message-and-new {
@@ -89,6 +76,21 @@ body {
   cursor: pointer;
   background-color: var(--bg-water-light);
   color: var(--text-primary);
+}
+
+#game-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+#game-area {
+  flex: 1;
+  padding-top: 2rem;
+  background-color: var(--bg-water-mid);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 #gameboards-and-hangars {
@@ -135,6 +137,18 @@ body {
   border-right: 2px solid var(--text-primary);
   border-bottom: 2px solid var(--text-primary);
   padding: 1rem;
+}
+
+.ship-placed {
+  background-color: var(--ship-placed-color);
+}
+
+.hit {
+  background-color: var(--hit-color);
+}
+
+.miss {
+  background-color: var(--miss-color);
 }
 
 .top-row {
