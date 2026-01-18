@@ -51,6 +51,7 @@ export function addBoardToUI(player) {
   for(const ship of player.ships) {
     const hangarShip = document.createElement("div");
     hangarShip.classList.add("hangar-ship");
+    hangarShip.dataset.shipName = ship.name;
 
     const hangarShipName = document.createElement("div");
     hangarShipName.classList.add("hangar-ship-name");
@@ -71,9 +72,28 @@ export function addBoardToUI(player) {
   }
 
   gameboardsAndHangars.appendChild(gameboardArea);
+
+  // to add data IDs 
 }
 
 export function removeBoardsfromUI() {
   const gameboardsAndHangars = document.querySelector("#gameboards-and-hangars");
   gameboardsAndHangars.replaceChildren();
 }
+
+export function selectShipInUI(selectedShipName, player) {
+  if (player.selectedShip) return false;
+
+  for (const ship of player.ships) {
+    if (selectedShipName === ship.name) player.addSelectedShip(selectedShipName);
+  }
+
+  const hangarShips = document.querySelectorAll(".hangar-ship");
+  hangarShips.forEach(hangarShip => {
+    if (hangarShip.classList.contains("selectable")) hangarShip.classList.remove("selectable");
+    if (hangarShip.dataset.shipName === selectedShipName) hangarShip.classList.add("selected");
+  });
+
+  // add gameController method to announce ship placement once written
+}
+
