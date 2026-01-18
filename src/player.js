@@ -4,8 +4,9 @@ import { Gameboard } from "./gameboard.js";
 import { Ship } from "./ship.js";
 
 export class Player {
-  constructor(name) {
+  constructor(name, type) {
     this.name = name;
+    this.type = type;
     this.gameboard = new Gameboard();
     this.ships = this.createShips();
   }
