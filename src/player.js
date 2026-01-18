@@ -9,6 +9,7 @@ export class Player {
     this.type = type;
     this.gameboard = new Gameboard();
     this.ships = this.createShips();
+    this.selectedShip = null;
   }
 
   createShips() {
@@ -27,5 +28,13 @@ export class Player {
 
   updateName(newName) {
     this.name = newName;
+  }
+
+  addSelectedShip(selectedShip) {
+    this.selectedShip = selectedShip;
+  }
+
+  removeSelectedShip() {
+    this.selectedShip = null;
   }
 }
