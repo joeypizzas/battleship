@@ -11,7 +11,7 @@
 
   /* Game pieces */
   --ship-color: #8fafbf;
-  --ship-placed-color: #2f8f7f;
+  --ship-placed-color: #2acb6f;
   --hit-color: #e63946;
   --miss-color: #b0bec5;
 
@@ -45,31 +45,36 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-width: 60rem;
 }
 
 #header {
   background-color: var(--bg-water-deep);
+  position: relative;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
-  padding: 1rem 0 1rem 0;
+  padding: 1rem 5rem 1rem 5rem;
 }
 
-#message-and-new {
-  display: flex;
-  align-items: center;
+#game-title {
+  margin-right: auto;
 }
 
 #message-area {
-  padding: 1rem;
+  padding: .6rem;
   background-color: var(--bg-water-light);
   border: 2px solid var(--text-primary);
   border-radius: 5px;
-  width: 25%;
+  width: 25rem;
   color: var(--text-primary);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #new-game {
+  margin-left: auto;
   padding: 0.4rem 1rem 0.4rem 1rem;
   border-radius: 3px;
   border: 1px solid var(--text-primary);
@@ -88,13 +93,12 @@ body {
   flex: 1;
   padding-top: 2rem;
   background-color: var(--bg-water-mid);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+
 }
 
 #gameboards-and-hangars {
   display: flex;
+  justify-content: center;
 }
 
 .gameboard-area {

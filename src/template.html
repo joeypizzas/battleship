@@ -1,165 +1,163 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Battleship</title>
-  </head>
-  <body>
-    <div id="main-container">
-      <div id="header">
-        <div id="game-title">Battleship</div>
-        <div id="message-area">
-          Joey pizzas hit Phoney baloney's ship. Still Joey pizzas move!
-        </div>
-        <button id="new-game">New game</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Battleship</title>
+</head>
+
+<body>
+  <div id="main-container">
+    <div id="header">
+      <div id="game-title">Battleship</div>
+      <div id="message-area">
+        Joey pizzas hit Phoney baloney's ship. Still Joey pizzas move!
       </div>
-      <div id="game-area">
-        <div id="gameboards-and-hangars">
-          <div class="gameboard-area" id="human">
-            <div class="name-and-edit">
-              <div class="gameboard-name">Joey pizzas</div>
-              <button class="edit-name">Edit</button>
+      <button id="new-game">New game</button>
+    </div>
+    <div id="game-area">
+      <div id="gameboards-and-hangars">
+        <div class="gameboard-area" id="human">
+          <div class="name-and-edit">
+            <div class="gameboard-name">Joey pizzas</div>
+            <button class="edit-name">Edit</button>
+          </div>
+          <div class="gameboard">
+            <div class="square-row">
+              <div class="square top-row left-column"></div>
+              <div class="square top-row"></div>
+              <div class="square top-row"></div>
+              <div class="square top-row"></div>
+              <div class="square top-row"></div>
+              <div class="square top-row"></div>
+              <div class="square top-row"></div>
+              <div class="square top-row"></div>
+              <div class="square top-row"></div>
+              <div class="square top-row miss"></div>
             </div>
-            <div class="gameboard">
-              <div class="square-row">
-                <div class="square top-row left-column"></div>
-                <div class="square top-row"></div>
-                <div class="square top-row"></div>
-                <div class="square top-row"></div>
-                <div class="square top-row"></div>
-                <div class="square top-row"></div>
-                <div class="square top-row"></div>
-                <div class="square top-row"></div>
-                <div class="square top-row"></div>
-                <div class="square top-row miss"></div>
-              </div>
-              <div class="square-row">
-                <div class="square left-column"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square miss"></div>
-              </div>
-              <div class="square-row">
-                <div class="square left-column hit"></div>
-                <div class="square hit"></div>
-                <div class="square hit"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square miss"></div>
-              </div>
-              <div class="square-row">
-                <div class="square left-column"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-              </div>
-              <div class="square-row">
-                <div class="square left-column"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-              </div>
-              <div class="square-row">
-                <div class="square left-column"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-              </div>
-              <div class="square-row">
-                <div class="square left-column"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-              </div>
-              <div class="square-row">
-                <div class="square left-column"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-              </div>
-              <div class="square-row">
-                <div class="square left-column"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square ship-placed"></div>
-                <div class="square ship-placed"></div>
-                <div class="square ship-placed"></div>
-                <div class="square ship-placed"></div>
-              </div>
-              <div class="square-row">
-                <div class="square left-column"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-              </div>
+            <div class="square-row">
+              <div class="square left-column"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square miss"></div>
             </div>
-            <div class="hangar"></div>
+            <div class="square-row">
+              <div class="square left-column hit"></div>
+              <div class="square hit"></div>
+              <div class="square hit"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square miss"></div>
+            </div>
+            <div class="square-row">
+              <div class="square left-column"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+            </div>
+            <div class="square-row">
+              <div class="square left-column"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+            </div>
+            <div class="square-row">
+              <div class="square left-column"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+            </div>
+            <div class="square-row">
+              <div class="square left-column"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+            </div>
+            <div class="square-row">
+              <div class="square left-column"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+            </div>
+            <div class="square-row">
+              <div class="square left-column"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square ship-placed"></div>
+              <div class="square ship-placed"></div>
+              <div class="square ship-placed"></div>
+              <div class="square ship-placed"></div>
+            </div>
+            <div class="square-row">
+              <div class="square left-column"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+              <div class="square"></div>
+            </div>
           </div>
           <div class="hangar"></div>
         </div>
-      </div>
-      <div id="footer">
-        <div id="footer-text">
-          Created by
-          <a
-            href="https://github.com/joeypizzas"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            joeypizzas</a
-          >
-        </div>
+        <div class="hangar"></div>
       </div>
     </div>
-  </body>
+    <div id="footer">
+      <div id="footer-text">
+        Created by
+        <a href="https://github.com/joeypizzas" target="_blank" rel="noopener noreferrer">
+          joeypizzas</a>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>
