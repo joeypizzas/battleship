@@ -54,7 +54,7 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 1rem 5rem 1rem 5rem;
+  padding: 1.5rem 5rem 1.5rem 5rem;
 }
 
 #game-title {
@@ -62,7 +62,7 @@ body {
 }
 
 #message-area {
-  padding: .6rem;
+  padding: .75rem;
   background-color: var(--bg-water-light);
   border: 2px solid var(--text-primary);
   border-radius: 5px;
@@ -92,6 +92,7 @@ body {
 #game-area {
   flex: 1;
   padding-top: 2rem;
+  padding-bottom: 2rem;
   background-color: var(--bg-water-mid);
 
 }
@@ -104,7 +105,13 @@ body {
 .gameboard-area {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 2rem;
+}
+
+.name-and-gameboard {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
 }
 
 .name-and-edit {
@@ -161,6 +168,28 @@ body {
 
 .left-column {
   border-left: 2px solid var(--text-primary);
+}
+
+.hangar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  border: 2px solid var(--text-primary);
+  padding: .65rem;
+}
+
+.hangar-ship {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.hangar-ship-name {
+  color: var(--text-primary);
+}
+
+.hangar-ship-storage {
+  display: flex;
 }
 
 #footer {
