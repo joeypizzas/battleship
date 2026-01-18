@@ -71,6 +71,9 @@ export function addBoardToUI(player) {
   }
 
   gameboardsAndHangars.appendChild(gameboardArea);
+}
 
-  // add data elements to squares
+export function removeBoardsfromUI() {
+  const gameboardsAndHangars = document.querySelector("#gameboards-and-hangars");
+  gameboardsAndHangars.replaceChildren();
 }
