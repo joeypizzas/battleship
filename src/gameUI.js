@@ -35,9 +35,11 @@ export function addBoardToUI(player) {
       square.classList.add("square");
       if (r === 0) square.classList.add("top-row");
       if (c === 0) square.classList.add("left-column");
-      if (player.type === "human" && player.gameboard[r][c].ship && player.gameboard[r][c].beenAttacked) square.classList.add("hit");
-      if (player.type === "human" && !player.gameboard[r][c].ship && player.gameboard[r][c].beenAttacked) square.classList.add("miss");
-      if (player.type === "human" && player.gameboard[r][c].ship && !player.gameboard[r][c].beenAttacked) square.classList.add("ship-placed");
+      if (player.type === "human" && player.gameboard.grid[r][c].ship && player.gameboard.grid[r][c].beenAttacked) square.classList.add("hit");
+      if (player.type === "human" && !player.gameboard.grid[r][c].ship && player.gameboard.grid[r][c].beenAttacked) square.classList.add("miss");
+      if (player.type === "human" && player.gameboard.grid[r][c].ship && !player.gameboard.grid[r][c].beenAttacked) square.classList.add("ship-placed");
+      square.dataset.x = r;
+      square.dataset.y = c
       squareRow.appendChild(square);
     }
     gameboard.appendChild(squareRow);
@@ -51,6 +53,7 @@ export function addBoardToUI(player) {
   for(const ship of player.ships) {
     const hangarShip = document.createElement("div");
     hangarShip.classList.add("hangar-ship");
+    if (player.type === "human") hangarShip.classList.add("selectable");
     hangarShip.dataset.shipName = ship.name;
 
     const hangarShipName = document.createElement("div");
@@ -72,8 +75,6 @@ export function addBoardToUI(player) {
   }
 
   gameboardsAndHangars.appendChild(gameboardArea);
-
-  // to add data IDs 
 }
 
 export function removeBoardsfromUI() {
@@ -95,5 +96,53 @@ export function selectShipInUI(selectedShipName, player) {
   });
 
   // add gameController method to announce ship placement once written
+  // maybe add class to highlight ship in UI once it exists
+}
+
+export function deselectShipInUI(player) {
+  player.removeSelectedShip();
+
+  const oldSelectedShip = document.querySelector(".selected");
+  oldSelectedShip.classList.remove("selected");
+  oldSelectedShip.classList.add("placed");
+
+  const hangarShips = document.querySelectorAll(".hangar-ship");
+  hangarShips.forEach(hangarShip => {
+    if (!hangarShip.classList.contains("placed")) hangarShip.classList.add("selectable");
+  })
+
+  // add gameController method to announce next steps based on whether more ships to place or all placed
+  // maybe add class to remove highlight from ship in UI once it exists
+  // Add check for starting game once gameController module exists
+}
+
+export function placeShipOnSquareInUI(x, y, player) {
+  for (const ship of player.ships) {
+    if (ship.name === player.selectedShip) {
+      if (ship.canShipBePlacedOnSquare(x, y, player.gameboard)) {
+        ship.addSquareToShipPlacement(x, y, player.gameboard);
+
+        const square = document.querySelector(`.square[data-x="${x}"][data-y="${y}"]`);
+        square.classList.add("ship-placed");
+
+        const selectedHangarShip = document.querySelector(".selected");
+        const hangarSquares = selectedHangarShip.querySelectorAll(".square");
+        for (const hangarSquare of hangarSquares) {
+          if (!hangarSquare.classList.contains("ship-placed")) {
+            hangarSquare.classList.add("ship-placed");
+            break;
+          }
+        }
+
+        if (player.gameboard.placeShip(ship)) {
+          this.deselectShipInUI(player);
+        } else {
+          // add gameController method that prompts to select an additional square
+        }
+      } else {
+        // Add gameController method that says the ship can't be placed there and to select a new square.
+      }
+    }
+  }
 }
 
