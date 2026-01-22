@@ -135,7 +135,7 @@ export function placeShipOnSquareInUI(x, y, player) {
         }
 
         if (player.gameboard.placeShip(ship)) {
-          this.deselectShipInUI(player);
+          deselectShipInUI(player);
         } else {
           // add gameController method that prompts to select an additional square
         }
