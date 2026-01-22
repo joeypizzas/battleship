@@ -146,3 +146,35 @@ export function placeShipOnSquareInUI(x, y, player) {
   }
 }
 
+export function attackSquareInUI(x, y, player) {
+  player.gameboard.receiveAttack(x, y);
+
+  const attackedSquare = document.querySelector(`.square[data-x="${x}"][data-y="${y}"]`);
+  if (player.gameboard.grid[x][y].ship) {
+    attackedSquare.classList.add("hit");
+
+    const hangarShips = document.querySelectorAll(".hangar-ship");
+    hangarShips.forEach(hangarShip => {
+      if (hangarShip.dataset.shipName === player.gameboard.grid[x][y].ship.name) {
+        const hangarSquares = hangarShip.querySelectorAll(".square");
+        for (const hangarSquare of hangarSquares) {
+          if (!hangarSquare.classList.contains("miss")) {
+            hangarSquare.classList.remove("ship-placed");
+            hangarSquare.classList.add("miss");
+            break;
+          }
+        }
+      }
+    });
+
+    // Add next step from gameController for hit or sunk ship
+    // checks whether all ships were sunk and announces winner, if so 
+
+  } else {
+    attackedSquare.classList.add("miss");
+
+    // updates turn from gameController 
+    // announces miss from gameController
+  }
+}
+
