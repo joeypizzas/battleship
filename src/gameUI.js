@@ -148,7 +148,7 @@ export function placeShipOnSquareInUI(x, y, player) {
 
 export function attackSquareInUI(x, y, player) {
   if (x < 0 || x > 9 || y < 0 || y > 9) return false;
-  
+
   player.gameboard.receiveAttack(x, y);
 
   const attackedSquare = document.querySelector(`.square[data-x="${x}"][data-y="${y}"]`);
@@ -178,5 +178,10 @@ export function attackSquareInUI(x, y, player) {
     // updates turn from gameController 
     // announces miss from gameController
   }
+}
+
+export function announceNextStepInUI(message) {
+  const messageArea = document.querySelector("#message-area");
+  messageArea.textContent = message;
 }
 
