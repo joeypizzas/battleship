@@ -147,6 +147,8 @@ export function placeShipOnSquareInUI(x, y, player) {
 }
 
 export function attackSquareInUI(x, y, player) {
+  if (x < 0 || x > 9 || y < 0 || y > 9) return false;
+  
   player.gameboard.receiveAttack(x, y);
 
   const attackedSquare = document.querySelector(`.square[data-x="${x}"][data-y="${y}"]`);
@@ -158,9 +160,9 @@ export function attackSquareInUI(x, y, player) {
       if (hangarShip.dataset.shipName === player.gameboard.grid[x][y].ship.name) {
         const hangarSquares = hangarShip.querySelectorAll(".square");
         for (const hangarSquare of hangarSquares) {
-          if (!hangarSquare.classList.contains("miss")) {
+          if (!hangarSquare.classList.contains("hit")) {
             hangarSquare.classList.remove("ship-placed");
-            hangarSquare.classList.add("miss");
+            hangarSquare.classList.add("hit");
             break;
           }
         }
