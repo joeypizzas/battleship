@@ -185,3 +185,11 @@ export function announceNextStepInUI(message) {
   messageArea.textContent = message;
 }
 
+export function initUIEventListeners(human, computer) {
+  addBoardToUI(human);
+  addBoardToUI(computer);
+
+  // Add listeners to human hangar and board for placement. Then, add listeners only to computer board for game.
+  // Classes to squares for game that indicate whether they are attackable, or just go off of beenAttacked?
+}
+
