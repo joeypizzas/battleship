@@ -13,5 +13,4 @@ selectShipInUI("cruiser", human);
 placeShipOnSquareInUI(5, 5, human);
 placeShipOnSquareInUI(5, 6, human);
 placeShipOnSquareInUI(5, 7, human);
-
-// test attackSquareInUI
+attackSquareInUI(5, 5, human);
