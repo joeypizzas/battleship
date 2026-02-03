@@ -109,6 +109,10 @@ body {
   gap: 2rem;
 }
 
+.hidden {
+  display: none;
+}
+
 .name-and-gameboard {
   display: flex;
   flex-direction: column;
@@ -149,6 +153,14 @@ body {
   border-right: 2px solid var(--text-primary);
   border-bottom: 2px solid var(--text-primary);
   padding: 1rem;
+}
+
+.square-hover {
+  background-color: var(--hover-color);
+}
+
+.square-click {
+  background-color: var(--bg-water-deep);
 }
 
 .ship-placed {
