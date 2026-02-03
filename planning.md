@@ -261,6 +261,8 @@
   - startGame method:
     - called when human player places last ship.
     - Sets turn management controller to human for making first move (this controls whether the player selecting a square on the board tries to attack it during game).
+    - loops through human player div grid and removes "pre-game" class from all squares.
+    - remove hidden class from compiter gameboard;
   - currentPlayer global variable in the module. Initially undefined.
   - changePlayerTurn method:
     - If currentPlayer is undefined, sets it to human.
