@@ -1,16 +1,10 @@
 // Battleship JS index
 
 import "./style.css";
-import { addBoardToUI, selectShipInUI, placeShipOnSquareInUI, attackSquareInUI } from "./gameUI.js";
+import { addBoardToUI, selectShipInUI, placeShipOnSquareInUI, attackSquareInUI, initUIEventListeners } from "./gameUI.js";
 import { Player } from "./player.js";
 
-const human = new Player("Phoney baloney", "human");
-addBoardToUI(human);
-selectShipInUI("destroyer", human);
-placeShipOnSquareInUI(1, 1, human);
-placeShipOnSquareInUI(2, 1, human);
-selectShipInUI("cruiser", human);
-placeShipOnSquareInUI(5, 5, human);
-placeShipOnSquareInUI(5, 6, human);
-placeShipOnSquareInUI(5, 7, human);
-attackSquareInUI(5, 5, human);
+const human = new Player("Joey pizzas", "human");
+const computer = new Player("Phoney baloney", "computer");
+
+initUIEventListeners(human, computer);
