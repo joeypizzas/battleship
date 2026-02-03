@@ -7,6 +7,7 @@ export function addBoardToUI(player) {
   gameboardArea.classList.add("gameboard-area");
   if (player.type === "human") gameboardArea.id = "human";
   if (player.type === "computer") gameboardArea.id = "computer";
+  if (player.type === "computer") gameboardArea.classList.add("hidden");
 
   const nameAndGameboard = document.createElement("div");
   nameAndGameboard.classList.add("name-and-gameboard");
@@ -35,6 +36,7 @@ export function addBoardToUI(player) {
       square.classList.add("square");
       if (r === 0) square.classList.add("top-row");
       if (c === 0) square.classList.add("left-column");
+      if (player.type === "human") square.classList.add("pre-game");
       if (player.type === "human" && player.gameboard.grid[r][c].ship && player.gameboard.grid[r][c].beenAttacked) square.classList.add("hit");
       if (player.type === "human" && !player.gameboard.grid[r][c].ship && player.gameboard.grid[r][c].beenAttacked) square.classList.add("miss");
       if (player.type === "human" && player.gameboard.grid[r][c].ship && !player.gameboard.grid[r][c].beenAttacked) square.classList.add("ship-placed");
@@ -188,6 +190,30 @@ export function announceNextStepInUI(message) {
 export function initUIEventListeners(human, computer) {
   addBoardToUI(human);
   addBoardToUI(computer);
+
+  const humanGameboard = document.querySelector("#human");
+  const squares = humanGameboard.querySelectorAll(".square");
+  squares.forEach(square => {
+    square.addEventListener("mouseover", () => {
+      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed")) square.classList.add("square-hover");
+    });
+    square.addEventListener("mouseout", () => {
+      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed")) square.classList.remove("square-hover");
+    });
+    square.addEventListener("mousedown", () => {
+      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed")) {
+        square.classList.remove("square-hover");
+        square.classList.add("square-click");
+      }
+    });
+    square.addEventListener("mouseup", () => {
+      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed")) {
+        square.classList.remove("square-click");
+        square.classList.add("square-hover");
+      }
+    });
+  });
+
 
   // Add listeners to human hangar and board for placement. Then, add listeners only to computer board for game.
   // Classes to squares for game that indicate whether they are attackable, or just go off of beenAttacked?
