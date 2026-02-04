@@ -192,25 +192,48 @@ export function initUIEventListeners(human, computer) {
   addBoardToUI(computer);
 
   const humanGameboard = document.querySelector("#human");
-  const squares = humanGameboard.querySelectorAll(".square");
-  squares.forEach(square => {
+  const humanSquares = humanGameboard.querySelectorAll(".square");
+  humanSquares.forEach(square => {
     square.addEventListener("mouseover", () => {
-      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed")) square.classList.add("square-hover");
+      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) square.classList.add("square-hover");
     });
     square.addEventListener("mouseout", () => {
-      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed")) square.classList.remove("square-hover");
+      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) square.classList.remove("square-hover");
     });
     square.addEventListener("mousedown", () => {
-      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed")) {
+      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) {
         square.classList.remove("square-hover");
         square.classList.add("square-click");
       }
     });
     square.addEventListener("mouseup", () => {
-      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed")) {
+      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) {
         square.classList.remove("square-click");
         square.classList.add("square-hover");
       }
+    });
+  });
+
+  const hangarShips = humanGameboard.querySelectorAll(".hangar-ship");
+  hangarShips.forEach(hangarShip => {
+    const hangarShipSquares = hangarShip.querySelectorAll(".square");
+    //add suqare highlight on hover and click
+
+    hangarShip.addEventListener("mouseover", () => {
+      if (hangarShip.classList.contains("selectable")) hangarShip.classList.add("hangar-ship-hover");
+    });
+    hangarShip.addEventListener("mouseout", () => {
+      hangarShip.classList.remove("hangar-ship-hover");
+    });
+    hangarShip.addEventListener("mousedown", () => {
+      if (hangarShip.classList.contains("selectable")) {
+        hangarShip.classList.remove("hangar-ship-hover");
+        hangarShip.classList.add("hangar-ship-click");
+      }
+    });
+    hangarShip.addEventListener("mouseup", () => {
+      hangarShip.classList.remove("hangar-ship-click");
+      hangarShip.classList.add("hangar-ship-hover");
     });
   });
 
