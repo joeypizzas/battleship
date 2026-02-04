@@ -157,10 +157,12 @@ body {
 
 .square-hover {
   background-color: var(--hover-color);
+  cursor: pointer;
 }
 
 .square-click {
   background-color: var(--bg-water-deep);
+  cursor: pointer;
 }
 
 .ship-placed {
@@ -195,6 +197,16 @@ body {
   display: flex;
   flex-direction: column;
   gap: .25rem;
+}
+
+.hangar-ship-hover {
+  background-color: var(--hover-color);
+  cursor: pointer;
+}
+
+.hangar-ship-click {
+  background-color: var(--bg-water-deep);
+  cursor: pointer;
 }
 
 .hangar-ship-name {
