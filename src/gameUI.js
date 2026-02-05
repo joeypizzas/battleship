@@ -7,7 +7,7 @@ export function addBoardToUI(player) {
   gameboardArea.classList.add("gameboard-area");
   if (player.type === "human") gameboardArea.id = "human";
   if (player.type === "computer") gameboardArea.id = "computer";
-  if (player.type === "computer") gameboardArea.classList.add("hidden");
+  //if (player.type === "computer") gameboardArea.classList.add("hidden");
 
   const nameAndGameboard = document.createElement("div");
   nameAndGameboard.classList.add("name-and-gameboard");
@@ -192,7 +192,8 @@ export function initUIEventListeners(human, computer) {
   addBoardToUI(computer);
 
   const humanGameboard = document.querySelector("#human");
-  const humanSquares = humanGameboard.querySelectorAll(".square");
+  const humanNameAndGameboard = humanGameboard.querySelector(".name-and-gameboard");
+  const humanSquares = humanNameAndGameboard.querySelectorAll(".square");
   humanSquares.forEach(square => {
     square.addEventListener("mouseover", () => {
       if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) square.classList.add("square-hover");
@@ -207,7 +208,7 @@ export function initUIEventListeners(human, computer) {
       }
     });
     square.addEventListener("mouseup", () => {
-      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) {
+      if (square.classList.contains("square-click")) {
         square.classList.remove("square-click");
         square.classList.add("square-hover");
       }
@@ -243,17 +244,39 @@ export function initUIEventListeners(human, computer) {
       }
     });
     hangarShip.addEventListener("mouseup", () => {
-      hangarShip.classList.remove("hangar-ship-click");
-      hangarShip.classList.add("hangar-ship-hover");
-      hangarShipSquares.forEach(hangarShipSquare => {
-        hangarShipSquare.classList.remove("square-click");
-        hangarShipSquare.classList.add("square-hover");
-      });
+      if (hangarShip.classList.contains("hangar-ship-click")) {
+        hangarShip.classList.remove("hangar-ship-click");
+        hangarShip.classList.add("hangar-ship-hover");
+        hangarShipSquares.forEach(hangarShipSquare => {
+          hangarShipSquare.classList.remove("square-click");
+          hangarShipSquare.classList.add("square-hover");
+        });
+      }
     });
   });
 
-
-  // Add listeners to human hangar and board for placement. Then, add listeners only to computer board for game.
-  // Classes to squares for game that indicate whether they are attackable, or just go off of beenAttacked?
+  const computerGameboard = document.querySelector("#computer");
+  const computerNameAndGameboard = computerGameboard.querySelector(".name-and-gameboard");
+  const computerSquares = computerNameAndGameboard.querySelectorAll(".square");
+  computerSquares.forEach(computerSquare => {
+    computerSquare.addEventListener("mouseover", () => {
+      if (!computer.gameboard.grid[computerSquare.dataset.x][computerSquare.dataset.y].beenAttacked) computerSquare.classList.add("square-hover");
+    });
+    computerSquare.addEventListener("mouseout", () => {
+      computerSquare.classList.remove("square-hover");
+    });
+    computerSquare.addEventListener("mousedown", () => {
+      if (!computer.gameboard.grid[computerSquare.dataset.x][computerSquare.dataset.y].beenAttacked) {
+        computerSquare.classList.remove("square-hover");
+        computerSquare.classList.add("square-click");
+      }
+    });
+    computerSquare.addEventListener("mouseup", () => {
+      if (computerSquare.classList.contains("square-click")) {
+        computerSquare.classList.remove("square-click");
+        computerSquare.classList.add("square-hover");
+      }
+    });
+  });
 }
 
