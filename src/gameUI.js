@@ -198,7 +198,7 @@ export function initUIEventListeners(human, computer) {
       if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) square.classList.add("square-hover");
     });
     square.addEventListener("mouseout", () => {
-      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) square.classList.remove("square-hover");
+      square.classList.remove("square-hover");
     });
     square.addEventListener("mousedown", () => {
       if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) {
@@ -217,23 +217,38 @@ export function initUIEventListeners(human, computer) {
   const hangarShips = humanGameboard.querySelectorAll(".hangar-ship");
   hangarShips.forEach(hangarShip => {
     const hangarShipSquares = hangarShip.querySelectorAll(".square");
-    //add suqare highlight on hover and click
-
+    
     hangarShip.addEventListener("mouseover", () => {
-      if (hangarShip.classList.contains("selectable")) hangarShip.classList.add("hangar-ship-hover");
+      if (hangarShip.classList.contains("selectable")) {
+        hangarShip.classList.add("hangar-ship-hover");
+        hangarShipSquares.forEach(hangarShipSquare => {
+          hangarShipSquare.classList.add("square-hover");
+        });
+      }
     });
     hangarShip.addEventListener("mouseout", () => {
       hangarShip.classList.remove("hangar-ship-hover");
+      hangarShipSquares.forEach(hangarShipSquare => {
+        hangarShipSquare.classList.remove("square-hover");
+      });
     });
     hangarShip.addEventListener("mousedown", () => {
       if (hangarShip.classList.contains("selectable")) {
         hangarShip.classList.remove("hangar-ship-hover");
         hangarShip.classList.add("hangar-ship-click");
+        hangarShipSquares.forEach(hangarShipSquare => {
+          hangarShipSquare.classList.remove("square-hover");
+          hangarShipSquare.classList.add("square-click");
+        });
       }
     });
     hangarShip.addEventListener("mouseup", () => {
       hangarShip.classList.remove("hangar-ship-click");
       hangarShip.classList.add("hangar-ship-hover");
+      hangarShipSquares.forEach(hangarShipSquare => {
+        hangarShipSquare.classList.remove("square-click");
+        hangarShipSquare.classList.add("square-hover");
+      });
     });
   });
 
