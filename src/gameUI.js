@@ -191,6 +191,7 @@ export function initUIEventListeners(human, computer) {
   addBoardToUI(human);
   addBoardToUI(computer);
 
+  // add logic to place selected ship on board
   const humanGameboard = document.querySelector("#human");
   const humanNameAndGameboard = humanGameboard.querySelector(".name-and-gameboard");
   const humanSquares = humanNameAndGameboard.querySelectorAll(".square");
@@ -215,6 +216,7 @@ export function initUIEventListeners(human, computer) {
     });
   });
 
+  // add logic to select ship
   const hangarShips = humanGameboard.querySelectorAll(".hangar-ship");
   hangarShips.forEach(hangarShip => {
     const hangarShipSquares = hangarShip.querySelectorAll(".square");
@@ -255,6 +257,7 @@ export function initUIEventListeners(human, computer) {
     });
   });
 
+  // add logic to make move during game
   const computerGameboard = document.querySelector("#computer");
   const computerNameAndGameboard = computerGameboard.querySelector(".name-and-gameboard");
   const computerSquares = computerNameAndGameboard.querySelectorAll(".square");
@@ -279,6 +282,7 @@ export function initUIEventListeners(human, computer) {
     });
   });
 
+  // add logic to change name
   const editNameButtons = document.querySelectorAll(".edit-name");
   editNameButtons.forEach(button => {
     button.addEventListener("mouseover", () => {
@@ -296,6 +300,7 @@ export function initUIEventListeners(human, computer) {
     });
   });
 
+  // add logic to reset game
   const newGame = document.querySelector(".new-game");
   newGame.addEventListener("mouseover", () => {
     newGame.classList.add("square-hover");
