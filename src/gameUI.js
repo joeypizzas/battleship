@@ -278,5 +278,22 @@ export function initUIEventListeners(human, computer) {
       }
     });
   });
+
+  const editNameButtons = document.querySelectorAll(".edit-name");
+  editNameButtons.forEach(button => {
+    button.addEventListener("mouseover", () => {
+      button.classList.add("square-hover");
+    });
+    button.addEventListener("mouseout", () => {
+      button.classList.remove("square-hover");
+    });
+    button.addEventListener("mousedown", () => {
+      button.classList.add("square-click");
+    });
+    button.addEventListener("mouseup", () => {
+      button.classList.remove("square-click");
+      button.classList.add("square-hover");
+    });
+  })
 }
 
