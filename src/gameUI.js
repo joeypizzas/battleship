@@ -294,6 +294,21 @@ export function initUIEventListeners(human, computer) {
       button.classList.remove("square-click");
       button.classList.add("square-hover");
     });
-  })
+  });
+
+  const newGame = document.querySelector(".new-game");
+  newGame.addEventListener("mouseover", () => {
+    newGame.classList.add("square-hover");
+  });
+  newGame.addEventListener("mouseout", () => {
+    newGame.classList.remove("square-hover");
+  });
+  newGame.addEventListener("mousedown", () => {
+    newGame.classList.add("square-click");
+  });
+  newGame.addEventListener("mouseup", () => {
+    newGame.classList.remove("square-click");
+    newGame.classList.add("square-hover");
+  });
 }
 
