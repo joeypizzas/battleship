@@ -108,6 +108,12 @@ export function deselectShipInUI(player) {
   oldSelectedShip.classList.remove("selected");
   oldSelectedShip.classList.add("placed");
 
+  oldSelectedShip.classList.remove("hangar-ship-hover");
+  const hangarShipSquares = oldSelectedShip.querySelectorAll(".square");
+  hangarShipSquares.forEach(hangarShipSquare => {
+    hangarShipSquare.classList.remove("square-hover");
+  });
+
   const hangarShips = document.querySelectorAll(".hangar-ship");
   hangarShips.forEach(hangarShip => {
     if (!hangarShip.classList.contains("placed")) hangarShip.classList.add("selectable");
@@ -191,7 +197,6 @@ export function initUIEventListeners(human, computer) {
   addBoardToUI(human);
   addBoardToUI(computer);
 
-  // add logic to place selected ship on board
   const humanGameboard = document.querySelector("#human");
   const humanNameAndGameboard = humanGameboard.querySelector(".name-and-gameboard");
   const humanSquares = humanNameAndGameboard.querySelectorAll(".square");
@@ -212,6 +217,11 @@ export function initUIEventListeners(human, computer) {
       if (square.classList.contains("square-click")) {
         square.classList.remove("square-click");
         square.classList.add("square-hover");
+
+        console.log(square.dataset.x)
+        console.log(square.dataset.y)
+        console.log(human);
+        placeShipOnSquareInUI(Number(square.dataset.x), Number(square.dataset.y), human);
       }
     });
   });
