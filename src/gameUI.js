@@ -216,7 +216,6 @@ export function initUIEventListeners(human, computer) {
     });
   });
 
-  // add logic to select ship
   const hangarShips = humanGameboard.querySelectorAll(".hangar-ship");
   hangarShips.forEach(hangarShip => {
     const hangarShipSquares = hangarShip.querySelectorAll(".square");
@@ -230,10 +229,12 @@ export function initUIEventListeners(human, computer) {
       }
     });
     hangarShip.addEventListener("mouseout", () => {
-      hangarShip.classList.remove("hangar-ship-hover");
-      hangarShipSquares.forEach(hangarShipSquare => {
-        hangarShipSquare.classList.remove("square-hover");
-      });
+      if (!hangarShip.classList.contains("selected")) {
+        hangarShip.classList.remove("hangar-ship-hover");
+        hangarShipSquares.forEach(hangarShipSquare => {
+          hangarShipSquare.classList.remove("square-hover");
+        });
+      }
     });
     hangarShip.addEventListener("mousedown", () => {
       if (hangarShip.classList.contains("selectable")) {
@@ -253,6 +254,8 @@ export function initUIEventListeners(human, computer) {
           hangarShipSquare.classList.remove("square-click");
           hangarShipSquare.classList.add("square-hover");
         });
+
+        selectShipInUI(hangarShip.dataset.shipName, human);
       }
     });
   });
