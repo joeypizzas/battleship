@@ -270,7 +270,6 @@ export function initUIEventListeners(human, computer) {
     });
   });
 
-  // add logic to make move during game
   const computerGameboard = document.querySelector("#computer");
   const computerNameAndGameboard = computerGameboard.querySelector(".name-and-gameboard");
   const computerSquares = computerNameAndGameboard.querySelectorAll(".square");
