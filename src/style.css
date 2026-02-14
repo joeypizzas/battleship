@@ -217,6 +217,35 @@ body {
   display: flex;
 }
 
+#edit-name-dialog[open] {
+  all: unset;
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--bg-water-light);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 2px solid var(--header);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+#title-and-close-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+#edit-name-form {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
 #footer {
   display: flex;
   justify-content: center;
