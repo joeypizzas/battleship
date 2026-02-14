@@ -159,8 +159,10 @@ export function attackSquareInUI(x, y, player) {
 
   player.gameboard.receiveAttack(x, y);
 
-  const attackedSquare = document.querySelector(`.square[data-x="${x}"][data-y="${y}"]`);
+  const gameboard = document.querySelector(`#${player.type}`);
+  const attackedSquare = gameboard.querySelector(`.square[data-x="${x}"][data-y="${y}"]`);
   if (player.gameboard.grid[x][y].ship) {
+    attackedSquare.classList.remove("ship-placed");
     attackedSquare.classList.add("hit");
 
     const hangarShips = document.querySelectorAll(".hangar-ship");
@@ -218,10 +220,8 @@ export function initUIEventListeners(human, computer) {
         square.classList.remove("square-click");
         square.classList.add("square-hover");
 
-        console.log(square.dataset.x)
-        console.log(square.dataset.y)
-        console.log(human);
         placeShipOnSquareInUI(Number(square.dataset.x), Number(square.dataset.y), human);
+        console.log(human);
       }
     });
   });
@@ -291,6 +291,8 @@ export function initUIEventListeners(human, computer) {
       if (computerSquare.classList.contains("square-click")) {
         computerSquare.classList.remove("square-click");
         computerSquare.classList.add("square-hover");
+
+        attackSquareInUI(Number(computerSquare.dataset.x), Number(computerSquare.dataset.y), computer);
       }
     });
   });
