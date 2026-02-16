@@ -329,5 +329,21 @@ export function initUIEventListeners(human, computer) {
     newGame.classList.remove("square-click");
     newGame.classList.add("square-hover");
   });
+
+  const closeModalButton = document.querySelector(".close-modal-button");
+  closeModalButton.addEventListener("mouseover", () => {
+    closeModalButton.classList.add("close-modal-hover");
+  });
+  closeModalButton.addEventListener("mouseout", () => {
+    closeModalButton.classList.remove("close-modal-hover");
+  });
+  closeModalButton.addEventListener("mousedown", () => {
+    closeModalButton.classList.remove("close-modal-hover");
+    closeModalButton.classList.add("close-modal-click");
+  });
+  closeModalButton.addEventListener("mouseup", () => {
+    closeModalButton.classList.remove("close-modal-click");
+    closeModalButton.classList.add("close-modal-hover");
+  });
 }
 
