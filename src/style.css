@@ -217,6 +217,10 @@ body {
   display: flex;
 }
 
+.blur {
+  filter: blur(10px);
+}
+
 #edit-name-dialog[open] {
   all: unset;
   position: fixed;
@@ -225,10 +229,9 @@ body {
   transform: translate(-50%, -50%);
   background-color: var(--bg-water-light);
   color: var(--text-primary);
-  font-size: 1.5rem;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 8px;
-  border: 2px solid var(--header);
+  border: 2px solid var(--text-primary);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -238,12 +241,51 @@ body {
 #title-and-close-button {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+#modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.close-modal-button {
+  cursor: pointer;
+  background-color: var(--bg-water-light);
+  border: none;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.close-modal-hover {
+  color: var(--hover-color);
+}
+
+.close-modal-click {
+  color: var(--bg-water-deep);
 }
 
 #edit-name-form {
   display: flex;
   flex-direction: column;
-  gap: .25rem;
+  gap: .5rem;
+}
+
+#new-name {
+  padding: .35rem;
+  border-radius: 3px;
+  border: 1px solid var(--text-primary);
+  color: var(--bg-water-deep);
+}
+
+#new-save-button {
+  background-color: var(--bg-water-light);
+  border: 1px solid var(--text-primary);
+  border-radius: 3px;
+  color: var(--text-primary);
+  padding: .35rem;
+  cursor: pointer;
 }
 
 #footer {
