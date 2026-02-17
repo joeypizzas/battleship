@@ -345,5 +345,21 @@ export function initUIEventListeners(human, computer) {
     closeModalButton.classList.remove("close-modal-click");
     closeModalButton.classList.add("close-modal-hover");
   });
+
+  const newSaveButton = document.querySelector(".new-save-button");
+  newSaveButton.addEventListener("mouseover", () => {
+    newSaveButton.classList.add("new-save-hover");
+  });
+  newSaveButton.addEventListener("mouseout", () => {
+    newSaveButton.classList.remove("new-save-hover");
+  });
+  newSaveButton.addEventListener("mousedown", () => {
+    newSaveButton.classList.remove("new-save-hover");
+    newSaveButton.classList.add("new-save-click");
+  });
+  newSaveButton.addEventListener("mouseup", () => {
+    newSaveButton.classList.remove("new-save-click");
+    newSaveButton.classList.add("new-save-hover");
+  });
 }
 
