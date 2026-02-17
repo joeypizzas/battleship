@@ -279,13 +279,21 @@ body {
   color: var(--bg-water-deep);
 }
 
-#new-save-button {
+.new-save-button {
   background-color: var(--bg-water-light);
   border: 1px solid var(--text-primary);
   border-radius: 3px;
   color: var(--text-primary);
   padding: .35rem;
   cursor: pointer;
+}
+
+.new-save-hover {
+  background-color: var(--hover-color);
+}
+
+.new-save-click {
+  background-color: var(--bg-water-deep);
 }
 
 #footer {
