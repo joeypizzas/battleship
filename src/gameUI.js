@@ -195,6 +195,19 @@ export function announceNextStepInUI(message) {
   messageArea.textContent = message;
 }
 
+function openDialog(player) {
+  const header = document.querySelector("#header");
+  const gameArea = document.querySelector("#game-area");
+  const footer = document.querySelector("#footer");
+  header.classList.add("blur");
+  gameArea.classList.add("blur");
+  footer.classList.add("blur");
+
+  const editNameDialog = document.querySelector("#edit-name-dialog");
+  editNameDialog.dataset.editingPlayer = player.type;
+  editNameDialog.showModal();
+}
+
 export function initUIEventListeners(human, computer) {
   addBoardToUI(human);
   addBoardToUI(computer);
@@ -296,7 +309,6 @@ export function initUIEventListeners(human, computer) {
     });
   });
 
-  // add logic to change name
   const editNameButtons = document.querySelectorAll(".edit-name");
   editNameButtons.forEach(button => {
     button.addEventListener("mouseover", () => {
@@ -311,6 +323,10 @@ export function initUIEventListeners(human, computer) {
     button.addEventListener("mouseup", () => {
       button.classList.remove("square-click");
       button.classList.add("square-hover");
+
+      const closestGameboardArea = button.closest(".gameboard-area");
+      if (closestGameboardArea.id === "human") openDialog(human);
+      if (closestGameboardArea.id === "computer") openDialog(computer);
     });
   });
 
