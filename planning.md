@@ -300,10 +300,10 @@
     - While loop that runs while currentPlayer === computer.
       - sets attackCoordinates = computer.determineAttack().
       - 3-5s timeout.
-      - invokes UI method attackSquareInUI with x and y coordinates from attackCoordinates array.
       - If attack was a hit:
         - Use double loop with offset to check 8 squares around hit square.
           - Add any squares that haven't already been queue to the targetQueue OR hit OR out of bounds OR the current attack square to the targetQueue.
+      - returns attackCoordinates array.
 - computer.js module
   - Handles logic for determining where computer placements and attacks occur. Including:
     - Selecting ships.
