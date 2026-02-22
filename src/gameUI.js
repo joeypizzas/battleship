@@ -1,5 +1,7 @@
 // Game UI module
 
+import { changePlayerTurn } from "./gameController.js";
+
 export function addBoardToUI(player) { // Used for both human and computer gameboards
   const gameboardsAndHangars = document.querySelector("#gameboards-and-hangars");
   
@@ -193,13 +195,10 @@ export function attackSquareInUI(x, y, player) {
       }
     });
 
-    // Add next step from gameController for hit or sunk ship
-    // checks whether all ships were sunk and announces winner, if so 
-
+    // Announce step from gameController for hit or sunk ship, or winner if all ships sunk
   } else {
     attackedSquare.classList.add("miss");
-
-    // updates turn from gameController 
+    changePlayerTurn();
     // announces miss from gameController
   }
 }
