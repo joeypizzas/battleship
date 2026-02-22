@@ -117,11 +117,7 @@ export function deselectShipInUI(player) {
   const hangarShips = document.querySelectorAll(".hangar-ship");
   hangarShips.forEach(hangarShip => {
     if (!hangarShip.classList.contains("placed")) hangarShip.classList.add("selectable"); // After a ship is placed, it's not selectable again
-  })
-
-  // add gameController method to announce next steps based on whether more ships to place or all placed
-  // maybe add class to remove highlight from ship in UI once it exists
-  // Add check for starting game once gameController module exists
+  });
 }
 
 export function placeShipOnSquareInUI(x, y, player) {
@@ -144,6 +140,11 @@ export function placeShipOnSquareInUI(x, y, player) {
 
         if (player.gameboard.placeShip(ship)) { // Only the full, final ship placement's added to the gameboard object
           deselectShipInUI(player);
+          if (player.gameboard.allShipsPlaced) {
+            startGameInUI();
+          } else {
+            // add announcement for selecting new ship
+          }
         } else {
           // add gameController method that prompts to select an additional square
         }
@@ -152,6 +153,19 @@ export function placeShipOnSquareInUI(x, y, player) {
       }
     }
   }
+}
+
+export function startGameInUI() {
+  const humanGameboard = document.querySelector("#human");
+  const humanSquares = humanGameboard.querySelectorAll(".square");
+  humanSquares.forEach(square => {
+    if (square.classList.contains("pre-game")) square.classList.remove("pre-game");
+  });
+
+  const computerGameboard = document.querySelector("#computer");
+  if (computerGameboard.classList.contains("hidden")) computerGameboard.classList.remove("hidden");
+
+  // call method to add game start announcement
 }
 
 export function attackSquareInUI(x, y, player) {
