@@ -181,7 +181,7 @@ export function attackSquareInUI(x, y, player) {
     attackedSquare.classList.remove("ship-placed");
     attackedSquare.classList.add("hit");
 
-    const hangarShips = document.querySelectorAll(".hangar-ship");
+    const hangarShips = gameboard.querySelectorAll(".hangar-ship");
     hangarShips.forEach(hangarShip => {
       if (hangarShip.dataset.shipName === player.gameboard.grid[x][y].ship.name) {
         const hangarSquares = hangarShip.querySelectorAll(".square");
