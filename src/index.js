@@ -1,12 +1,6 @@
 // Battleship JS index
 
 import "./style.css";
-import { initUIEventListeners } from "./gameUI.js";
-import { Player } from "./player.js";
+import { startPregame } from "./gameController.js";
 
-const human = new Player("Joey pizzas", "human");
-const computer = new Player("Phoney baloney", "computer");
-
-initUIEventListeners(human, computer);
-
-
+startPregame();
