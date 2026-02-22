@@ -1,13 +1,13 @@
 // Game UI module
 
-export function addBoardToUI(player) {
+export function addBoardToUI(player) { // Used for both human and computer gameboards
   const gameboardsAndHangars = document.querySelector("#gameboards-and-hangars");
   
   const gameboardArea = document.createElement("div");
   gameboardArea.classList.add("gameboard-area");
   if (player.type === "human") gameboardArea.id = "human";
   if (player.type === "computer") gameboardArea.id = "computer";
-  //if (player.type === "computer") gameboardArea.classList.add("hidden");
+  if (player.type === "computer") gameboardArea.classList.add("hidden"); // Computer gameboard isn't shown until game begins
 
   const nameAndGameboard = document.createElement("div");
   nameAndGameboard.classList.add("name-and-gameboard");
@@ -36,7 +36,7 @@ export function addBoardToUI(player) {
       square.classList.add("square");
       if (r === 0) square.classList.add("top-row");
       if (c === 0) square.classList.add("left-column");
-      if (player.type === "human") square.classList.add("pre-game");
+      if (player.type === "human") square.classList.add("pre-game"); // Ensures event listeners fire for selecting squares to place ships on human gameboard
       if (player.type === "human" && player.gameboard.grid[r][c].ship && player.gameboard.grid[r][c].beenAttacked) square.classList.add("hit");
       if (player.type === "human" && !player.gameboard.grid[r][c].ship && player.gameboard.grid[r][c].beenAttacked) square.classList.add("miss");
       if (player.type === "human" && player.gameboard.grid[r][c].ship && !player.gameboard.grid[r][c].beenAttacked) square.classList.add("ship-placed");
@@ -55,7 +55,7 @@ export function addBoardToUI(player) {
   for(const ship of player.ships) {
     const hangarShip = document.createElement("div");
     hangarShip.classList.add("hangar-ship");
-    if (player.type === "human") hangarShip.classList.add("selectable");
+    if (player.type === "human") hangarShip.classList.add("selectable"); // Allows selecting ships to then place them on board
     hangarShip.dataset.shipName = ship.name;
 
     const hangarShipName = document.createElement("div");
@@ -79,13 +79,13 @@ export function addBoardToUI(player) {
   gameboardsAndHangars.appendChild(gameboardArea);
 }
 
-export function removeBoardsfromUI() {
+export function removeBoardsfromUI() { // Used when resetting game
   const gameboardsAndHangars = document.querySelector("#gameboards-and-hangars");
   gameboardsAndHangars.replaceChildren();
 }
 
 export function selectShipInUI(selectedShipName, player) {
-  if (player.selectedShip) return false;
+  if (player.selectedShip) return false; // Once you select a ship, you have to place it before selecting a new one
 
   for (const ship of player.ships) {
     if (selectedShipName === ship.name) player.addSelectedShip(selectedShipName);
@@ -93,7 +93,7 @@ export function selectShipInUI(selectedShipName, player) {
 
   const hangarShips = document.querySelectorAll(".hangar-ship");
   hangarShips.forEach(hangarShip => {
-    if (hangarShip.classList.contains("selectable")) hangarShip.classList.remove("selectable");
+    if (hangarShip.classList.contains("selectable")) hangarShip.classList.remove("selectable"); // Ensures can't select ship while once is selected
     if (hangarShip.dataset.shipName === selectedShipName) hangarShip.classList.add("selected");
   });
 
@@ -116,7 +116,7 @@ export function deselectShipInUI(player) {
 
   const hangarShips = document.querySelectorAll(".hangar-ship");
   hangarShips.forEach(hangarShip => {
-    if (!hangarShip.classList.contains("placed")) hangarShip.classList.add("selectable");
+    if (!hangarShip.classList.contains("placed")) hangarShip.classList.add("selectable"); // After a ship is placed, it's not selectable again
   })
 
   // add gameController method to announce next steps based on whether more ships to place or all placed
@@ -128,7 +128,7 @@ export function placeShipOnSquareInUI(x, y, player) {
   for (const ship of player.ships) {
     if (ship.name === player.selectedShip) {
       if (ship.canShipBePlacedOnSquare(x, y, player.gameboard)) {
-        ship.addSquareToShipPlacement(x, y, player.gameboard);
+        ship.addSquareToShipPlacement(x, y, player.gameboard); // Track prospective placement on ship alongside board UI
 
         const square = document.querySelector(`.square[data-x="${x}"][data-y="${y}"]`);
         square.classList.add("ship-placed");
@@ -142,7 +142,7 @@ export function placeShipOnSquareInUI(x, y, player) {
           }
         }
 
-        if (player.gameboard.placeShip(ship)) {
+        if (player.gameboard.placeShip(ship)) { // Only the full, final ship placement's added to the gameboard object
           deselectShipInUI(player);
         } else {
           // add gameController method that prompts to select an additional square
@@ -239,7 +239,7 @@ export function initUIEventListeners(human, computer) {
   const humanSquares = humanNameAndGameboard.querySelectorAll(".square");
   humanSquares.forEach(square => {
     square.addEventListener("mouseover", () => {
-      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) square.classList.add("square-hover");
+      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) square.classList.add("square-hover"); // Only possible to interact with human gameboard squares when placing ships pregame. Must have a selected ship and the square must be open.
     });
     square.addEventListener("mouseout", () => {
       square.classList.remove("square-hover");
@@ -256,7 +256,6 @@ export function initUIEventListeners(human, computer) {
         square.classList.add("square-hover");
 
         placeShipOnSquareInUI(Number(square.dataset.x), Number(square.dataset.y), human);
-        console.log(human);
       }
     });
   });
@@ -274,7 +273,7 @@ export function initUIEventListeners(human, computer) {
       }
     });
     hangarShip.addEventListener("mouseout", () => {
-      if (!hangarShip.classList.contains("selected")) {
+      if (!hangarShip.classList.contains("selected")) { // Selected ship stays highlighted during placement
         hangarShip.classList.remove("hangar-ship-hover");
         hangarShipSquares.forEach(hangarShipSquare => {
           hangarShipSquare.classList.remove("square-hover");
@@ -310,7 +309,7 @@ export function initUIEventListeners(human, computer) {
   const computerSquares = computerNameAndGameboard.querySelectorAll(".square");
   computerSquares.forEach(computerSquare => {
     computerSquare.addEventListener("mouseover", () => {
-      if (!computer.gameboard.grid[computerSquare.dataset.x][computerSquare.dataset.y].beenAttacked) computerSquare.classList.add("square-hover");
+      if (!computer.gameboard.grid[computerSquare.dataset.x][computerSquare.dataset.y].beenAttacked) computerSquare.classList.add("square-hover"); // Computer board's only shown once game starts, so only checks are for prior attack and correct turn
     });
     computerSquare.addEventListener("mouseout", () => {
       computerSquare.classList.remove("square-hover");
