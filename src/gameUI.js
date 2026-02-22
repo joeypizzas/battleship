@@ -1,6 +1,6 @@
 // Game UI module
 
-import { changePlayerTurn } from "./gameController.js";
+import { changePlayerTurn, resetGame } from "./gameController.js";
 
 export function addBoardToUI(player) { // Used for both human and computer gameboards
   const gameboardsAndHangars = document.querySelector("#gameboards-and-hangars");
@@ -364,7 +364,6 @@ export function initUIEventListeners(human, computer) {
     });
   });
 
-  // add logic to reset game
   const newGame = document.querySelector(".new-game");
   newGame.addEventListener("mouseover", () => {
     newGame.classList.add("square-hover");
@@ -378,6 +377,7 @@ export function initUIEventListeners(human, computer) {
   newGame.addEventListener("mouseup", () => {
     newGame.classList.remove("square-click");
     newGame.classList.add("square-hover");
+    resetGame();
   });
 
   const closeModalButton = document.querySelector(".close-modal-button");
@@ -441,4 +441,3 @@ export function initUIEventListeners(human, computer) {
     newName.setCustomValidity("");
   });
 }
-
