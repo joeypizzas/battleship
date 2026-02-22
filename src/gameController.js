@@ -1,6 +1,6 @@
 // Game controller module 
 
-import { initUIEventListeners, startGameInUI } from "./gameUI.js";
+import { initUIEventListeners, startGameInUI, removeBoardsfromUI } from "./gameUI.js";
 import { Player } from "./player.js";
 
 let currentPlayerTurn;
@@ -21,11 +21,17 @@ export function startGame() {
   // Announces start of game
 }
 
-function changePlayerTurn() {
+export function changePlayerTurn() {
   if (!currentPlayerTurn) currentPlayerTurn = "human";
   if (currentPlayerTurn === "human") {
     currentPlayerTurn = "computer";
     // add computerAttack method
   }
   if (currentPlayerTurn === "computer") currentPlayerTurn = "human";
+}
+
+export function resetGame() {
+  currentPlayerTurn = undefined;
+  removeBoardsfromUI();
+  startPregame();
 }
