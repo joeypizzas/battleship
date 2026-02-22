@@ -224,6 +224,12 @@ function closeDialog() {
   editNameDialog.close();
 }
 
+function updateNameInUI(player) {
+  const playerGameboard = document.querySelector(`#${player.type}`);
+  const gameboardName = playerGameboard.querySelector(".gameboard-name");
+  gameboardName.textContent = player.name;
+}
+
 export function initUIEventListeners(human, computer) {
   addBoardToUI(human);
   addBoardToUI(computer);
@@ -393,6 +399,20 @@ export function initUIEventListeners(human, computer) {
   newSaveButton.addEventListener("mouseup", () => {
     newSaveButton.classList.remove("new-save-click");
     newSaveButton.classList.add("new-save-hover");
+
+    const editNameDialog = document.querySelector("#edit-name-dialog");
+    const newName = document.querySelector("#new-name");
+
+    if (editNameDialog.dataset.editingPlayer === "human") {
+      human.updateName(newName.value);
+      updateNameInUI(human);
+    } 
+    if (editNameDialog.dataset.editingPlayer === "computer") {
+      computer.updateName(newName.value);
+      updateNameInUI(computer);
+    }
+
+    closeDialog();
   });
 }
 
