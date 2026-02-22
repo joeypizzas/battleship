@@ -2,9 +2,12 @@
 
 import { changePlayerTurn, resetGame } from "./gameController.js";
 
-export function addBoardToUI(player) { // Used for both human and computer gameboards
-  const gameboardsAndHangars = document.querySelector("#gameboards-and-hangars");
-  
+export function addBoardToUI(player) {
+  // Used for both human and computer gameboards
+  const gameboardsAndHangars = document.querySelector(
+    "#gameboards-and-hangars",
+  );
+
   const gameboardArea = document.createElement("div");
   gameboardArea.classList.add("gameboard-area");
   if (player.type === "human") gameboardArea.id = "human";
@@ -39,11 +42,26 @@ export function addBoardToUI(player) { // Used for both human and computer gameb
       if (r === 0) square.classList.add("top-row");
       if (c === 0) square.classList.add("left-column");
       if (player.type === "human") square.classList.add("pre-game"); // Ensures event listeners fire for selecting squares to place ships on human gameboard
-      if (player.type === "human" && player.gameboard.grid[r][c].ship && player.gameboard.grid[r][c].beenAttacked) square.classList.add("hit");
-      if (player.type === "human" && !player.gameboard.grid[r][c].ship && player.gameboard.grid[r][c].beenAttacked) square.classList.add("miss");
-      if (player.type === "human" && player.gameboard.grid[r][c].ship && !player.gameboard.grid[r][c].beenAttacked) square.classList.add("ship-placed");
+      if (
+        player.type === "human" &&
+        player.gameboard.grid[r][c].ship &&
+        player.gameboard.grid[r][c].beenAttacked
+      )
+        square.classList.add("hit");
+      if (
+        player.type === "human" &&
+        !player.gameboard.grid[r][c].ship &&
+        player.gameboard.grid[r][c].beenAttacked
+      )
+        square.classList.add("miss");
+      if (
+        player.type === "human" &&
+        player.gameboard.grid[r][c].ship &&
+        !player.gameboard.grid[r][c].beenAttacked
+      )
+        square.classList.add("ship-placed");
       square.dataset.x = r;
-      square.dataset.y = c
+      square.dataset.y = c;
       squareRow.appendChild(square);
     }
     gameboard.appendChild(squareRow);
@@ -54,7 +72,7 @@ export function addBoardToUI(player) { // Used for both human and computer gameb
   hangar.classList.add("hangar");
   gameboardArea.appendChild(hangar);
 
-  for(const ship of player.ships) {
+  for (const ship of player.ships) {
     const hangarShip = document.createElement("div");
     hangarShip.classList.add("hangar-ship");
     if (player.type === "human") hangarShip.classList.add("selectable"); // Allows selecting ships to then place them on board
@@ -81,8 +99,11 @@ export function addBoardToUI(player) { // Used for both human and computer gameb
   gameboardsAndHangars.appendChild(gameboardArea);
 }
 
-export function removeBoardsfromUI() { // Used when resetting game
-  const gameboardsAndHangars = document.querySelector("#gameboards-and-hangars");
+export function removeBoardsfromUI() {
+  // Used when resetting game
+  const gameboardsAndHangars = document.querySelector(
+    "#gameboards-and-hangars",
+  );
   gameboardsAndHangars.replaceChildren();
 }
 
@@ -90,13 +111,16 @@ export function selectShipInUI(selectedShipName, player) {
   if (player.selectedShip) return false; // Once you select a ship, you have to place it before selecting a new one
 
   for (const ship of player.ships) {
-    if (selectedShipName === ship.name) player.addSelectedShip(selectedShipName);
+    if (selectedShipName === ship.name)
+      player.addSelectedShip(selectedShipName);
   }
 
   const hangarShips = document.querySelectorAll(".hangar-ship");
-  hangarShips.forEach(hangarShip => {
-    if (hangarShip.classList.contains("selectable")) hangarShip.classList.remove("selectable"); // Ensures can't select ship while once is selected
-    if (hangarShip.dataset.shipName === selectedShipName) hangarShip.classList.add("selected");
+  hangarShips.forEach((hangarShip) => {
+    if (hangarShip.classList.contains("selectable"))
+      hangarShip.classList.remove("selectable"); // Ensures can't select ship while once is selected
+    if (hangarShip.dataset.shipName === selectedShipName)
+      hangarShip.classList.add("selected");
   });
 
   // add gameController method to announce ship placement once written
@@ -112,13 +136,14 @@ export function deselectShipInUI(player) {
 
   oldSelectedShip.classList.remove("hangar-ship-hover");
   const hangarShipSquares = oldSelectedShip.querySelectorAll(".square");
-  hangarShipSquares.forEach(hangarShipSquare => {
+  hangarShipSquares.forEach((hangarShipSquare) => {
     hangarShipSquare.classList.remove("square-hover");
   });
 
   const hangarShips = document.querySelectorAll(".hangar-ship");
-  hangarShips.forEach(hangarShip => {
-    if (!hangarShip.classList.contains("placed")) hangarShip.classList.add("selectable"); // After a ship is placed, it's not selectable again
+  hangarShips.forEach((hangarShip) => {
+    if (!hangarShip.classList.contains("placed"))
+      hangarShip.classList.add("selectable"); // After a ship is placed, it's not selectable again
   });
 }
 
@@ -128,7 +153,9 @@ export function placeShipOnSquareInUI(x, y, player) {
       if (ship.canShipBePlacedOnSquare(x, y, player.gameboard)) {
         ship.addSquareToShipPlacement(x, y, player.gameboard); // Track prospective placement on ship alongside board UI
 
-        const square = document.querySelector(`.square[data-x="${x}"][data-y="${y}"]`);
+        const square = document.querySelector(
+          `.square[data-x="${x}"][data-y="${y}"]`,
+        );
         square.classList.add("ship-placed");
 
         const selectedHangarShip = document.querySelector(".selected");
@@ -140,7 +167,8 @@ export function placeShipOnSquareInUI(x, y, player) {
           }
         }
 
-        if (player.gameboard.placeShip(ship)) { // Only the full, final ship placement's added to the gameboard object
+        if (player.gameboard.placeShip(ship)) {
+          // Only the full, final ship placement's added to the gameboard object
           deselectShipInUI(player);
           if (player.gameboard.allShipsPlaced) {
             startGameInUI();
@@ -160,12 +188,14 @@ export function placeShipOnSquareInUI(x, y, player) {
 export function startGameInUI() {
   const humanGameboard = document.querySelector("#human");
   const humanSquares = humanGameboard.querySelectorAll(".square");
-  humanSquares.forEach(square => {
-    if (square.classList.contains("pre-game")) square.classList.remove("pre-game");
+  humanSquares.forEach((square) => {
+    if (square.classList.contains("pre-game"))
+      square.classList.remove("pre-game");
   });
 
   const computerGameboard = document.querySelector("#computer");
-  if (computerGameboard.classList.contains("hidden")) computerGameboard.classList.remove("hidden");
+  if (computerGameboard.classList.contains("hidden"))
+    computerGameboard.classList.remove("hidden");
 
   // call method to add game start announcement
 }
@@ -176,14 +206,18 @@ export function attackSquareInUI(x, y, player) {
   player.gameboard.receiveAttack(x, y);
 
   const gameboard = document.querySelector(`#${player.type}`);
-  const attackedSquare = gameboard.querySelector(`.square[data-x="${x}"][data-y="${y}"]`);
+  const attackedSquare = gameboard.querySelector(
+    `.square[data-x="${x}"][data-y="${y}"]`,
+  );
   if (player.gameboard.grid[x][y].ship) {
     attackedSquare.classList.remove("ship-placed");
     attackedSquare.classList.add("hit");
 
     const hangarShips = gameboard.querySelectorAll(".hangar-ship");
-    hangarShips.forEach(hangarShip => {
-      if (hangarShip.dataset.shipName === player.gameboard.grid[x][y].ship.name) {
+    hangarShips.forEach((hangarShip) => {
+      if (
+        hangarShip.dataset.shipName === player.gameboard.grid[x][y].ship.name
+      ) {
         const hangarSquares = hangarShip.querySelectorAll(".square");
         for (const hangarSquare of hangarSquares) {
           if (!hangarSquare.classList.contains("hit")) {
@@ -248,17 +282,28 @@ export function initUIEventListeners(human, computer) {
   addBoardToUI(computer);
 
   const humanGameboard = document.querySelector("#human");
-  const humanNameAndGameboard = humanGameboard.querySelector(".name-and-gameboard");
+  const humanNameAndGameboard = humanGameboard.querySelector(
+    ".name-and-gameboard",
+  );
   const humanSquares = humanNameAndGameboard.querySelectorAll(".square");
-  humanSquares.forEach(square => {
+  humanSquares.forEach((square) => {
     square.addEventListener("mouseover", () => {
-      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) square.classList.add("square-hover"); // Only possible to interact with human gameboard squares when placing ships pregame. Must have a selected ship and the square must be open.
+      if (
+        square.classList.contains("pre-game") &&
+        !square.classList.contains("ship-placed") &&
+        human.selectedShip
+      )
+        square.classList.add("square-hover"); // Only possible to interact with human gameboard squares when placing ships pregame. Must have a selected ship and the square must be open.
     });
     square.addEventListener("mouseout", () => {
       square.classList.remove("square-hover");
     });
     square.addEventListener("mousedown", () => {
-      if (square.classList.contains("pre-game") && !square.classList.contains("ship-placed") && human.selectedShip) {
+      if (
+        square.classList.contains("pre-game") &&
+        !square.classList.contains("ship-placed") &&
+        human.selectedShip
+      ) {
         square.classList.remove("square-hover");
         square.classList.add("square-click");
       }
@@ -268,27 +313,32 @@ export function initUIEventListeners(human, computer) {
         square.classList.remove("square-click");
         square.classList.add("square-hover");
 
-        placeShipOnSquareInUI(Number(square.dataset.x), Number(square.dataset.y), human);
+        placeShipOnSquareInUI(
+          Number(square.dataset.x),
+          Number(square.dataset.y),
+          human,
+        );
       }
     });
   });
 
   const hangarShips = humanGameboard.querySelectorAll(".hangar-ship");
-  hangarShips.forEach(hangarShip => {
+  hangarShips.forEach((hangarShip) => {
     const hangarShipSquares = hangarShip.querySelectorAll(".square");
-    
+
     hangarShip.addEventListener("mouseover", () => {
       if (hangarShip.classList.contains("selectable")) {
         hangarShip.classList.add("hangar-ship-hover");
-        hangarShipSquares.forEach(hangarShipSquare => {
+        hangarShipSquares.forEach((hangarShipSquare) => {
           hangarShipSquare.classList.add("square-hover");
         });
       }
     });
     hangarShip.addEventListener("mouseout", () => {
-      if (!hangarShip.classList.contains("selected")) { // Selected ship stays highlighted during placement
+      if (!hangarShip.classList.contains("selected")) {
+        // Selected ship stays highlighted during placement
         hangarShip.classList.remove("hangar-ship-hover");
-        hangarShipSquares.forEach(hangarShipSquare => {
+        hangarShipSquares.forEach((hangarShipSquare) => {
           hangarShipSquare.classList.remove("square-hover");
         });
       }
@@ -297,7 +347,7 @@ export function initUIEventListeners(human, computer) {
       if (hangarShip.classList.contains("selectable")) {
         hangarShip.classList.remove("hangar-ship-hover");
         hangarShip.classList.add("hangar-ship-click");
-        hangarShipSquares.forEach(hangarShipSquare => {
+        hangarShipSquares.forEach((hangarShipSquare) => {
           hangarShipSquare.classList.remove("square-hover");
           hangarShipSquare.classList.add("square-click");
         });
@@ -307,7 +357,7 @@ export function initUIEventListeners(human, computer) {
       if (hangarShip.classList.contains("hangar-ship-click")) {
         hangarShip.classList.remove("hangar-ship-click");
         hangarShip.classList.add("hangar-ship-hover");
-        hangarShipSquares.forEach(hangarShipSquare => {
+        hangarShipSquares.forEach((hangarShipSquare) => {
           hangarShipSquare.classList.remove("square-click");
           hangarShipSquare.classList.add("square-hover");
         });
@@ -318,17 +368,28 @@ export function initUIEventListeners(human, computer) {
   });
 
   const computerGameboard = document.querySelector("#computer");
-  const computerNameAndGameboard = computerGameboard.querySelector(".name-and-gameboard");
+  const computerNameAndGameboard = computerGameboard.querySelector(
+    ".name-and-gameboard",
+  );
   const computerSquares = computerNameAndGameboard.querySelectorAll(".square");
-  computerSquares.forEach(computerSquare => {
+  computerSquares.forEach((computerSquare) => {
     computerSquare.addEventListener("mouseover", () => {
-      if (!computer.gameboard.grid[computerSquare.dataset.x][computerSquare.dataset.y].beenAttacked) computerSquare.classList.add("square-hover"); // Computer board's only shown once game starts, so only checks are for prior attack and correct turn
+      if (
+        !computer.gameboard.grid[computerSquare.dataset.x][
+          computerSquare.dataset.y
+        ].beenAttacked
+      )
+        computerSquare.classList.add("square-hover"); // Computer board's only shown once game starts, so only checks are for prior attack and correct turn
     });
     computerSquare.addEventListener("mouseout", () => {
       computerSquare.classList.remove("square-hover");
     });
     computerSquare.addEventListener("mousedown", () => {
-      if (!computer.gameboard.grid[computerSquare.dataset.x][computerSquare.dataset.y].beenAttacked) {
+      if (
+        !computer.gameboard.grid[computerSquare.dataset.x][
+          computerSquare.dataset.y
+        ].beenAttacked
+      ) {
         computerSquare.classList.remove("square-hover");
         computerSquare.classList.add("square-click");
       }
@@ -338,13 +399,17 @@ export function initUIEventListeners(human, computer) {
         computerSquare.classList.remove("square-click");
         computerSquare.classList.add("square-hover");
 
-        attackSquareInUI(Number(computerSquare.dataset.x), Number(computerSquare.dataset.y), computer);
+        attackSquareInUI(
+          Number(computerSquare.dataset.x),
+          Number(computerSquare.dataset.y),
+          computer,
+        );
       }
     });
   });
 
   const editNameButtons = document.querySelectorAll(".edit-name");
-  editNameButtons.forEach(button => {
+  editNameButtons.forEach((button) => {
     button.addEventListener("mouseover", () => {
       button.classList.add("square-hover");
     });
@@ -418,7 +483,7 @@ export function initUIEventListeners(human, computer) {
     if (editNameDialog.dataset.editingPlayer === "human") {
       human.updateName(newName.value);
       updateNameInUI(human);
-    } 
+    }
     if (editNameDialog.dataset.editingPlayer === "computer") {
       computer.updateName(newName.value);
       updateNameInUI(computer);

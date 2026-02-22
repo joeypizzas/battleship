@@ -8,7 +8,11 @@ export function placeComputerShips(computer) {
   while (!computer.gameboard.allShipsPlaced) {
     computer.selectedShip = shipsForPlacement.shift();
     while (!computer.selectedShip.fullyPlaced) {
-      computer.selectedShip.addSquareToShipPlacement(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), computer.gameboard);
+      computer.selectedShip.addSquareToShipPlacement(
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        computer.gameboard,
+      );
       computer.gameboard.placeShip(computer.selectedShip);
     }
   }

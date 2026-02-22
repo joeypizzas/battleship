@@ -1,6 +1,10 @@
-// Game controller module 
+// Game controller module
 
-import { initUIEventListeners, startGameInUI, removeBoardsfromUI } from "./gameUI.js";
+import {
+  initUIEventListeners,
+  startGameInUI,
+  removeBoardsfromUI,
+} from "./gameUI.js";
 import { Player } from "./player.js";
 import { placeComputerShips } from "./computer.js";
 
