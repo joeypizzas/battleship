@@ -27,7 +27,7 @@
           <button class="close-modal-button">X</button>
       </div>
       <form class="form" id="edit-name-form" action="/submit" method="POST">
-          <input id="new-name">
+          <input id="new-name" type="text" maxlength="50" pattern="[A-Za-z0-9 ,.'\-:!?]+" required>
           <button class="new-save-button" type="submit" form="new-form">Save</button>
       </form>
   </dialog>
