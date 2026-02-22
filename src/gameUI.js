@@ -414,5 +414,19 @@ export function initUIEventListeners(human, computer) {
 
     closeDialog();
   });
+
+  const newName = document.querySelector("#new-name");
+  newName.addEventListener("blur", () => {
+    newName.setCustomValidity("");
+    if (!newName.checkValidity()) {
+      newName.setCustomValidity("Please enter a valid player name");
+      newName.reportValidity();
+    } else {
+      newName.setCustomValidity("");
+    }
+  });
+  newName.addEventListener("input", () => {
+    newName.setCustomValidity("");
+  });
 }
 
