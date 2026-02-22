@@ -203,9 +203,25 @@ function openDialog(player) {
   gameArea.classList.add("blur");
   footer.classList.add("blur");
 
+  const newName = document.querySelector("#new-name");
+  newName.value = player.name;
+
   const editNameDialog = document.querySelector("#edit-name-dialog");
   editNameDialog.dataset.editingPlayer = player.type;
   editNameDialog.showModal();
+}
+
+function closeDialog() {
+  const header = document.querySelector("#header");
+  const gameArea = document.querySelector("#game-area");
+  const footer = document.querySelector("#footer");
+  header.classList.remove("blur");
+  gameArea.classList.remove("blur");
+  footer.classList.remove("blur");
+
+  const editNameDialog = document.querySelector("#edit-name-dialog");
+  editNameDialog.dataset.editingPlayer = null;
+  editNameDialog.close();
 }
 
 export function initUIEventListeners(human, computer) {
@@ -360,6 +376,7 @@ export function initUIEventListeners(human, computer) {
   closeModalButton.addEventListener("mouseup", () => {
     closeModalButton.classList.remove("close-modal-click");
     closeModalButton.classList.add("close-modal-hover");
+    closeDialog();
   });
 
   const newSaveButton = document.querySelector(".new-save-button");
