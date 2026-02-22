@@ -2,6 +2,7 @@
 
 import { initUIEventListeners, startGameInUI, removeBoardsfromUI } from "./gameUI.js";
 import { Player } from "./player.js";
+import { placeComputerShips } from "./computer.js";
 
 let currentPlayerTurn;
 
@@ -9,15 +10,15 @@ export function startPregame() {
   const human = new Player("Joey pizzas", "human");
   const computer = new Player("Phoney baloney", "computer");
   initUIEventListeners(human, computer);
+  placeComputerShips(computer);
 
-  // Add method(s) for computer ship placement
   // Add human announcement for selecting first ship
 }
 
 export function startGame() {
   startGameInUI();
+  changePlayerTurn();
 
-  // calls changePlayerTurn method
   // Announces start of game
 }
 
