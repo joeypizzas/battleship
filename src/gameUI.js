@@ -185,6 +185,28 @@ export function placeShipOnSquareInUI(x, y, player) {
   }
 }
 
+export function markComputerShipPlacedInHangar(player) {
+  const computerGameboard = document.querySelector("#computer");
+  const hangarShips = computerGameboard.querySelectorAll(".hangar-ship");
+  hangarShips.forEach((hangarShip) => {
+    if (hangarShip.dataset.shipName === player.selectedShip.name) {
+      hangarShip.classList.add("selected");
+    }
+  });
+
+  const selectedHangarShip = computerGameboard.querySelector(".selected");
+  if (selectedHangarShip) {
+    const hangarSquares = selectedHangarShip.querySelectorAll(".square");
+    for (const hangarSquare of hangarSquares) {
+      if (!hangarSquare.classList.contains("ship-placed")) {
+        hangarSquare.classList.add("ship-placed");
+        break;
+      }
+    }
+    selectedHangarShip.classList.remove("selected");
+  }
+}
+
 export function startGameInUI() {
   const humanGameboard = document.querySelector("#human");
   const humanSquares = humanGameboard.querySelectorAll(".square");
@@ -210,7 +232,8 @@ export function attackSquareInUI(x, y, player) {
     `.square[data-x="${x}"][data-y="${y}"]`,
   );
   if (player.gameboard.grid[x][y].ship) {
-    attackedSquare.classList.remove("ship-placed");
+    if (attackedSquare.classList.contains("ship-placed"))
+      attackedSquare.classList.remove("ship-placed");
     attackedSquare.classList.add("hit");
 
     const hangarShips = gameboard.querySelectorAll(".hangar-ship");
