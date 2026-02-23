@@ -26,6 +26,10 @@ export function startGame() {
   // Announces start of game
 }
 
+export function getCurrentPlayerTurn() {
+  return currentPlayerTurn;
+}
+
 export function changePlayerTurn() {
   if (!currentPlayerTurn) currentPlayerTurn = "human";
   if (currentPlayerTurn === "human") {
