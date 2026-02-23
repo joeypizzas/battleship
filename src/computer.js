@@ -1,7 +1,7 @@
 // Computer module
 
 import { getCurrentPlayerTurn } from "./gameController.js";
-import { markComputerShipPlacedInHangar } from "./gameUI.js";
+import { markComputerShipPlacedInHangar, attackSquareInUI } from "./gameUI.js";
 
 const targetQueue = [];
 
@@ -48,8 +48,15 @@ function determineComputerAttack(human) {
   return targetQueue.shift();
 }
 
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function computerAttack(human) {
   while (getCurrentPlayerTurn() === "computer") {
     const attackCoordinates = determineComputerAttack(human);
+    await delay(3000);
+    attackSquareInUI(attackCoordinates[0], attackCoordinates[1], human);
+    // Check for hit. If hit, double nested loop to find new squares to add to targetQueue
   }
 }
