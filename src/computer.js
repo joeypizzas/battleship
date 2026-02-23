@@ -1,19 +1,29 @@
 // Computer module
 
+import { getCurrentPlayerTurn } from "./gameController.js";
+import { markComputerShipPlacedInHangar } from "./gameUI.js";
+
 const targetQueue = [];
 
 export function placeComputerShips(computer) {
   const shipsForPlacement = [...computer.ships];
 
-  while (!computer.gameboard.allShipsPlaced) {
+  while (shipsForPlacement.length > 0) {
     computer.selectedShip = shipsForPlacement.shift();
     while (!computer.selectedShip.fullyPlaced) {
-      computer.selectedShip.addSquareToShipPlacement(
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        computer.gameboard,
-      );
-      computer.gameboard.placeShip(computer.selectedShip);
+      let x = Math.floor(Math.random() * 10);
+      let y = Math.floor(Math.random() * 10);
+      if (
+        computer.selectedShip.canShipBePlacedOnSquare(x, y, computer.gameboard)
+      ) {
+        computer.selectedShip.addSquareToShipPlacement(
+          x,
+          y,
+          computer.gameboard,
+        );
+        markComputerShipPlacedInHangar(computer);
+        computer.gameboard.placeShip(computer.selectedShip);
+      }
     }
   }
 
@@ -36,4 +46,10 @@ function determineComputerAttack(human) {
   }
 
   return targetQueue.shift();
+}
+
+export async function computerAttack(human) {
+  while (getCurrentPlayerTurn() === "computer") {
+    const attackCoordinates = determineComputerAttack(human);
+  }
 }
