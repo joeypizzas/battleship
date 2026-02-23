@@ -19,3 +19,21 @@ export function placeComputerShips(computer) {
 
   computer.removeSelectedShip();
 }
+
+function determineComputerAttack(human) {
+  if (targetQueue.length === 0) {
+    let x = Math.floor(Math.random()) * 10;
+    let y = Math.floor(Math.random()) * 10;
+
+    if (!human.gameboard.grid[x][y].beenAttacked) return [x, y];
+
+    while (human.gameboard.grid[x][y].beenAttacked) {
+      x = Math.floor(Math.random()) * 10;
+      y = Math.floor(Math.random()) * 10;
+    }
+
+    return [x, y];
+  }
+
+  return targetQueue.shift();
+}
