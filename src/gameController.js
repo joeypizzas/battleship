@@ -6,7 +6,7 @@ import {
   removeBoardsfromUI,
 } from "./gameUI.js";
 import { Player } from "./player.js";
-import { placeComputerShips } from "./computer.js";
+import { placeComputerShips, computerAttack } from "./computer.js";
 
 let currentPlayerTurn;
 
@@ -30,11 +30,11 @@ export function getCurrentPlayerTurn() {
   return currentPlayerTurn;
 }
 
-export function changePlayerTurn() {
+export function changePlayerTurn(human) {
   if (!currentPlayerTurn) currentPlayerTurn = "human";
   if (currentPlayerTurn === "human") {
     currentPlayerTurn = "computer";
-    // add computerAttack method
+    computerAttack(human);
   }
   if (currentPlayerTurn === "computer") currentPlayerTurn = "human";
 }
