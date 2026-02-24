@@ -222,7 +222,7 @@ export function startGameInUI() {
   // call method to add game start announcement
 }
 
-export function attackSquareInUI(x, y, player) {
+export function attackSquareInUI(x, y, player, human) {
   if (x < 0 || x > 9 || y < 0 || y > 9) return false;
 
   player.gameboard.receiveAttack(x, y);
@@ -255,7 +255,7 @@ export function attackSquareInUI(x, y, player) {
     // Announce step from gameController for hit or sunk ship, or winner if all ships sunk
   } else {
     attackedSquare.classList.add("miss");
-    changePlayerTurn();
+    changePlayerTurn(human);
     // announces miss from gameController
   }
 }
