@@ -57,6 +57,26 @@ export async function computerAttack(human) {
     const attackCoordinates = determineComputerAttack(human);
     await delay(3000);
     attackSquareInUI(attackCoordinates[0], attackCoordinates[1], human);
-    // Check for hit. If hit, double nested loop to find new squares to add to targetQueue
+    if (human.gameboard.grid[attackCoordinates[0]][attackCoordinates[1]].ship) {
+      let x = attackCoordinates[0];
+      let y = attackCoordinates[1];
+
+      for (let xOffset = -1; xOffset <= 1; xOffset++) {
+        for (let yOffset = -1; yOffset <= 1; yOffset++) {
+          const xNeighbor = x + xOffset;
+          const yNeighbor = y + yOffset;
+
+          if (x === xNeighbor && y === yNeighbor) continue;
+          if (xNeighbor < 0 || xNeighbor > 9 || yNeighbor < 0 || yNeighbor > 9)
+            continue;
+          if (human.gameboard.grid[xNeighbor][yNeighbor].beenAttacked) continue;
+          for (const target of targetQueue) {
+            if (target[0] === xNeighbor && target[1] === yNeighbor) continue;
+          }
+
+          targetQueue.push([xNeighbor, yNeighbor]);
+        }
+      }
+    }
   }
 }
