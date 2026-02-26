@@ -1,6 +1,11 @@
 // Game UI module
 
-import { changePlayerTurn, resetGame } from "./gameController.js";
+import {
+  changePlayerTurn,
+  resetGame,
+  getCurrentPlayerTurn,
+  startGame,
+} from "./gameController.js";
 
 export function addBoardToUI(player) {
   // Used for both human and computer gameboards
@@ -171,7 +176,7 @@ export function placeShipOnSquareInUI(x, y, player) {
           // Only the full, final ship placement's added to the gameboard object
           deselectShipInUI(player);
           if (player.gameboard.allShipsPlaced) {
-            startGameInUI();
+            startGame(player);
           } else {
             // add announcement for selecting new ship
           }
@@ -400,7 +405,8 @@ export function initUIEventListeners(human, computer) {
       if (
         !computer.gameboard.grid[computerSquare.dataset.x][
           computerSquare.dataset.y
-        ].beenAttacked
+        ].beenAttacked &&
+        getCurrentPlayerTurn() === "human"
       )
         computerSquare.classList.add("square-hover"); // Computer board's only shown once game starts, so only checks are for prior attack and correct turn
     });
@@ -411,7 +417,8 @@ export function initUIEventListeners(human, computer) {
       if (
         !computer.gameboard.grid[computerSquare.dataset.x][
           computerSquare.dataset.y
-        ].beenAttacked
+        ].beenAttacked &&
+        getCurrentPlayerTurn() === "human"
       ) {
         computerSquare.classList.remove("square-hover");
         computerSquare.classList.add("square-click");
@@ -426,6 +433,7 @@ export function initUIEventListeners(human, computer) {
           Number(computerSquare.dataset.x),
           Number(computerSquare.dataset.y),
           computer,
+          human,
         );
       }
     });
