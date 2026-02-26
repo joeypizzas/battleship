@@ -258,7 +258,8 @@ export function attackSquareInUI(x, y, player, human) {
     });
 
     // Announce step from gameController for hit or sunk ship, or winner if all ships sunk
-  } else {
+  }
+  if (!player.gameboard.grid[x][y].ship) {
     attackedSquare.classList.add("miss");
     changePlayerTurn(human);
     // announces miss from gameController
