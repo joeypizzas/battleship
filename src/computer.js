@@ -32,14 +32,14 @@ export function placeComputerShips(computer) {
 
 function determineComputerAttack(human) {
   if (targetQueue.length === 0) {
-    let x = Math.floor(Math.random()) * 10;
-    let y = Math.floor(Math.random()) * 10;
+    let x = Math.floor(Math.random() * 10);
+    let y = Math.floor(Math.random() * 10);
 
     if (!human.gameboard.grid[x][y].beenAttacked) return [x, y];
 
     while (human.gameboard.grid[x][y].beenAttacked) {
-      x = Math.floor(Math.random()) * 10;
-      y = Math.floor(Math.random()) * 10;
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * 10);
     }
 
     return [x, y];
@@ -56,7 +56,7 @@ export async function computerAttack(human) {
   while (getCurrentPlayerTurn() === "computer") {
     const attackCoordinates = determineComputerAttack(human);
     await delay(3000);
-    attackSquareInUI(attackCoordinates[0], attackCoordinates[1], human);
+    attackSquareInUI(attackCoordinates[0], attackCoordinates[1], human, human);
     if (human.gameboard.grid[attackCoordinates[0]][attackCoordinates[1]].ship) {
       let x = attackCoordinates[0];
       let y = attackCoordinates[1];
