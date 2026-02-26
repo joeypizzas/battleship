@@ -34,12 +34,10 @@ export function changePlayerTurn(human) {
   if (!currentPlayerTurn) {
     currentPlayerTurn = "human";
     return;
-  }
-  if (currentPlayerTurn === "human") {
+  } else if (currentPlayerTurn === "human") {
     currentPlayerTurn = "computer";
     computerAttack(human);
-  }
-  if (currentPlayerTurn === "computer") currentPlayerTurn = "human";
+  } else if (currentPlayerTurn === "computer") currentPlayerTurn = "human";
 }
 
 export function resetGame() {
