@@ -19,9 +19,9 @@ export function startPregame() {
   // Add human announcement for selecting first ship
 }
 
-export function startGame() {
+export function startGame(human) {
   startGameInUI();
-  changePlayerTurn();
+  changePlayerTurn(human);
 
   // Announces start of game
 }
@@ -31,7 +31,10 @@ export function getCurrentPlayerTurn() {
 }
 
 export function changePlayerTurn(human) {
-  if (!currentPlayerTurn) currentPlayerTurn = "human";
+  if (!currentPlayerTurn) {
+    currentPlayerTurn = "human";
+    return;
+  }
   if (currentPlayerTurn === "human") {
     currentPlayerTurn = "computer";
     computerAttack(human);
