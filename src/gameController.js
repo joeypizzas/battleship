@@ -45,3 +45,7 @@ export function resetGame() {
   removeBoardsfromUI();
   startPregame();
 }
+
+export function endGame() {
+  currentPlayerTurn = undefined;
+}
