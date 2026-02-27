@@ -55,7 +55,6 @@ function delay(ms) {
 export async function computerAttack(human) {
   while (getCurrentPlayerTurn() === "computer") {
     const attackCoordinates = determineComputerAttack(human);
-    console.log(attackCoordinates);
     await delay(3000);
     attackSquareInUI(attackCoordinates[0], attackCoordinates[1], human, human);
     if (human.gameboard.grid[attackCoordinates[0]][attackCoordinates[1]].ship) {
