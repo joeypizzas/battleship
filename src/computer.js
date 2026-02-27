@@ -70,9 +70,14 @@ export async function computerAttack(human) {
           if (xNeighbor < 0 || xNeighbor > 9 || yNeighbor < 0 || yNeighbor > 9)
             continue;
           if (human.gameboard.grid[xNeighbor][yNeighbor].beenAttacked) continue;
+          let alreadyQueued;
           for (const target of targetQueue) {
-            if (target[0] === xNeighbor && target[1] === yNeighbor) continue;
+            if (target[0] === xNeighbor && target[1] === yNeighbor) {
+              alreadyQueued = true;
+              break;
+            }
           }
+          if (alreadyQueued) continue;
 
           targetQueue.push([xNeighbor, yNeighbor]);
         }
