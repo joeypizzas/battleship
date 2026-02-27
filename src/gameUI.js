@@ -5,6 +5,7 @@ import {
   resetGame,
   getCurrentPlayerTurn,
   startGame,
+  endGame,
 } from "./gameController.js";
 
 export function addBoardToUI(player) {
@@ -257,7 +258,10 @@ export function attackSquareInUI(x, y, player, human) {
       }
     });
 
-    // Announce step from gameController for hit or sunk ship, or winner if all ships sunk
+    if (player.gameboard.allShipsSunk) {
+      // report winner and prompt to reset game
+      endGame();
+    }
   }
   if (!player.gameboard.grid[x][y].ship) {
     attackedSquare.classList.add("miss");
