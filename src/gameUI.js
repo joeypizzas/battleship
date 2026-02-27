@@ -498,6 +498,11 @@ export function initUIEventListeners(human, computer) {
     closeDialog();
   });
 
+  const form = document.querySelector(".form");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+  });
+
   const newSaveButton = document.querySelector(".new-save-button");
   newSaveButton.addEventListener("mouseover", () => {
     newSaveButton.classList.add("new-save-hover");
