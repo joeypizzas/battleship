@@ -49,3 +49,7 @@ export function resetGame() {
 export function endGame() {
   currentPlayerTurn = undefined;
 }
+
+export function determinePlacementEvent(x, y, player) {
+  // return object with valid ship placement on square, whether ship was fully placed and whether all ships were fully placed
+}
