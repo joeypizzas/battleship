@@ -61,26 +61,30 @@ export async function computerAttack(human) {
       let x = attackCoordinates[0];
       let y = attackCoordinates[1];
 
-      for (let xOffset = -1; xOffset <= 1; xOffset++) {
-        for (let yOffset = -1; yOffset <= 1; yOffset++) {
-          const xNeighbor = x + xOffset;
-          const yNeighbor = y + yOffset;
+      const neighbors = [];
+      neighbors.push([x, y - 1], [x - 1, y], [x, y + 1], [x + 1, y]);
+      for (const neighbor of neighbors) {
+        if (
+          neighbor[0] < 0 ||
+          neighbor[0] > 9 ||
+          neighbor[1] < 0 ||
+          neighbor[1] > 9
+        )
+          continue;
 
-          if (x === xNeighbor && y === yNeighbor) continue;
-          if (xNeighbor < 0 || xNeighbor > 9 || yNeighbor < 0 || yNeighbor > 9)
-            continue;
-          if (human.gameboard.grid[xNeighbor][yNeighbor].beenAttacked) continue;
-          let alreadyQueued;
-          for (const target of targetQueue) {
-            if (target[0] === xNeighbor && target[1] === yNeighbor) {
-              alreadyQueued = true;
-              break;
-            }
+        if (human.gameboard.grid[neighbor[0]][neighbor[1]].beenAttacked)
+          continue;
+
+        let alreadyQueued = false;
+        for (const target of targetQueue) {
+          if (target[0] === neighbor[0] && target[1] === neighbor[1]) {
+            alreadyQueued = true;
+            break;
           }
-          if (alreadyQueued) continue;
-
-          targetQueue.push([xNeighbor, yNeighbor]);
         }
+        if (alreadyQueued) continue;
+
+        targetQueue.push(neighbor);
       }
     }
   }
