@@ -51,5 +51,41 @@ export function endGame() {
 }
 
 export function determinePlacementEvent(x, y, player) {
-  // return object with valid ship placement on square, whether ship was fully placed and whether all ships were fully placed
+  return {
+    type: "placement",
+    ship: player.gameboard.grid[x][y].ship,
+    allShipsPlaced: player.gameboard.allShipsPlaced,
+  };
+}
+
+export function determineAttackEvent(x, y, attackedPlayer) {
+  return {
+    type: "attack",
+    attackerPlayerName: getCurrentPlayerTurn().name,
+    attackedPlayerName: attackedPlayer.name,
+    square: attackedPlayer.gameboard.grid[x][y],
+    allShipsSunk: attackedPlayer.gameboard.allShipsSunk,
+  };
+}
+
+export function getGameMessage(event) {
+  if (!event) return "Select a ship from the hangar and place it on the board.";
+
+  if (event.type === "placement") {
+    if (!event.ship.fullyPlaced)
+      return "Great choice! Now, continue placing your ship on the board.";
+
+    if (event.ship.fullyPlaced && !event.allShipsPlaced)
+      return `You finished placing your ${event.ship.name}. Select another ship from the hangar and place it on the board.`;
+
+    if (event.allShipsPlaced)
+      return "It's time for Battleship! Make your first attack.";
+  }
+
+  if (event.type === "attack") {
+    if (!event.square.ship)
+      return `${event.attackerPlayerName} missed into the wide open seas. ${event.attackedPlayerName}, go on the attack!`;
+
+    // Cases for hit, hit with ship sunk, and hit with all ships sunk.
+  }
 }
