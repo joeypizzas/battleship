@@ -1,44 +1,51 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Battleship</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Battleship</title>
-</head>
-
-<body>
-  <div id="main-container">
-    <div id="header">
-      <div id="game-title">Battleship</div>
-      <div id="message-area">
-        Joey pizzas hit Phoney baloney's ship. Still Joey pizzas move!
+  <body>
+    <div id="main-container">
+      <div id="header">
+        <div id="game-title">Battleship</div>
+        <div id="message-area"></div>
+        <button class="new-game">New game</button>
       </div>
-      <button class="new-game">New game</button>
-    </div>
-    <div id="game-area">
-      <div id="gameboards-and-hangars">
-
+      <div id="game-area">
+        <div id="gameboards-and-hangars"></div>
       </div>
-    </div>
-    <dialog id="edit-name-dialog">
-      <div id="title-and-close-button">
+      <dialog id="edit-name-dialog">
+        <div id="title-and-close-button">
           <div id="modal-title">Edit name</div>
           <button class="close-modal-button">X</button>
-      </div>
-      <form class="form" id="edit-name-form" action="/submit" method="POST">
-          <input id="new-name" type="text" maxlength="50" pattern="[A-Za-z0-9 ,.'\-:!?]+" required>
-          <button class="new-save-button" type="submit" form="new-form">Save</button>
-      </form>
-  </dialog>
-    <div id="footer">
-      <div id="footer-text">
-        Created by
-        <a href="https://github.com/joeypizzas" target="_blank" rel="noopener noreferrer">
-          joeypizzas</a>
+        </div>
+        <form class="form" id="edit-name-form" action="/submit" method="POST">
+          <input
+            id="new-name"
+            type="text"
+            maxlength="50"
+            pattern="[A-Za-z0-9 ,.'\-:!?]+"
+            required
+          />
+          <button class="new-save-button" type="submit" form="new-form">
+            Save
+          </button>
+        </form>
+      </dialog>
+      <div id="footer">
+        <div id="footer-text">
+          Created by
+          <a
+            href="https://github.com/joeypizzas"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            joeypizzas</a
+          >
+        </div>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
