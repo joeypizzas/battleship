@@ -15,8 +15,6 @@ export function startPregame() {
   const computer = new Player("Phoney baloney", "computer");
   initUIEventListeners(human, computer);
   placeComputerShips(computer);
-
-  // Add human announcement for selecting first ship
 }
 
 export function startGame(human) {
@@ -51,9 +49,12 @@ export function endGame() {
 }
 
 export function determinePlacementEvent(x, y, player) {
+  let placedShip;
+  if (player.selectedShip) placedShip = player.selectedShip;
+  else placedShip = player.gameboard.grid[x][y].ship;
   return {
     type: "placement",
-    ship: player.gameboard.grid[x][y].ship,
+    ship: placedShip,
     allShipsPlaced: player.gameboard.allShipsPlaced,
   };
 }
@@ -61,7 +62,6 @@ export function determinePlacementEvent(x, y, player) {
 export function determineAttackEvent(x, y, attackedPlayer) {
   return {
     type: "attack",
-    attackerPlayerName: getCurrentPlayerTurn().name,
     attackedPlayerName: attackedPlayer.name,
     square: attackedPlayer.gameboard.grid[x][y],
     allShipsSunk: attackedPlayer.gameboard.allShipsSunk,
@@ -84,15 +84,15 @@ export function getGameMessage(event) {
 
   if (event.type === "attack") {
     if (!event.square.ship)
-      return `${event.attackerPlayerName} missed into the wide open seas. ${event.attackedPlayerName}, go on the attack!`;
+      return `A miss into the wide open seas. ${event.attackedPlayerName}, go on the attack!`;
 
     if (event.square.ship && !event.square.ship.isSunk)
-      return `${event.attackerPlayerName} hit ${event.attackedPlayerName}'s ${event.square.ship.name}. Press the attack!`;
+      return `A hit against ${event.attackedPlayerName}'s ${event.square.ship.name}. Press the attack!`;
 
     if (event.square.ship && event.square.ship.isSunk && !event.allShipsSunk)
-      return `${event.attackerPlayerName} sunk ${event.attackedPlayerName}'s ${event.square.ship.name}. Continue attacking their fleet!`;
+      return `${event.attackedPlayerName}'s ${event.square.ship.name} is sunk. Continue attacking their fleet!`;
 
     if (event.allShipsSunk)
-      return `${event.attackerPlayerName} sunk ${event.attackedPlayerName}'s fleet and is master of the seas!`;
+      return `${event.attackedPlayerName}'s fleet is sunk. Game over!`;
   }
 }
