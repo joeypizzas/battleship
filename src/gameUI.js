@@ -6,6 +6,9 @@ import {
   getCurrentPlayerTurn,
   startGame,
   endGame,
+  determinePlacementEvent,
+  determineAttackEvent,
+  getGameMessage,
 } from "./gameController.js";
 
 export function addBoardToUI(player) {
@@ -178,14 +181,12 @@ export function placeShipOnSquareInUI(x, y, player) {
           deselectShipInUI(player);
           if (player.gameboard.allShipsPlaced) {
             startGame(player);
-          } else {
-            // add announcement for selecting new ship
           }
-        } else {
-          // add gameController method that prompts to select an additional square
         }
-      } else {
-        // Add gameController method that says the ship can't be placed there and to select a new square.
+
+        announceNextStepInUI(
+          getGameMessage(determinePlacementEvent(x, y, player)),
+        );
       }
     }
   }
@@ -224,8 +225,6 @@ export function startGameInUI() {
   const computerGameboard = document.querySelector("#computer");
   if (computerGameboard.classList.contains("hidden"))
     computerGameboard.classList.remove("hidden");
-
-  // call method to add game start announcement
 }
 
 export function attackSquareInUI(x, y, player, human) {
@@ -259,15 +258,15 @@ export function attackSquareInUI(x, y, player, human) {
     });
 
     if (player.gameboard.allShipsSunk) {
-      // report winner and prompt to reset game
       endGame();
     }
   }
   if (!player.gameboard.grid[x][y].ship) {
     attackedSquare.classList.add("miss");
     changePlayerTurn(human);
-    // announces miss from gameController
   }
+
+  announceNextStepInUI(getGameMessage(determineAttackEvent(x, y, player)));
 }
 
 export function announceNextStepInUI(message) {
@@ -313,6 +312,7 @@ function updateNameInUI(player) {
 export function initUIEventListeners(human, computer) {
   addBoardToUI(human);
   addBoardToUI(computer);
+  announceNextStepInUI(getGameMessage());
 
   const humanGameboard = document.querySelector("#human");
   const humanNameAndGameboard = humanGameboard.querySelector(
