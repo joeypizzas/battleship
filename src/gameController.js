@@ -86,6 +86,13 @@ export function getGameMessage(event) {
     if (!event.square.ship)
       return `${event.attackerPlayerName} missed into the wide open seas. ${event.attackedPlayerName}, go on the attack!`;
 
-    // Cases for hit, hit with ship sunk, and hit with all ships sunk.
+    if (event.square.ship && !event.square.ship.isSunk)
+      return `${event.attackerPlayerName} hit ${event.attackedPlayerName}'s ${event.square.ship.name}. Press the attack!`;
+
+    if (event.square.ship && event.square.ship.isSunk && !event.allShipsSunk)
+      return `${event.attackerPlayerName} sunk ${event.attackedPlayerName}'s ${event.square.ship.name}. Continue attacking their fleet!`;
+
+    if (event.allShipsSunk)
+      return `${event.attackerPlayerName} sunk ${event.attackedPlayerName}'s fleet and is master of the seas!`;
   }
 }
